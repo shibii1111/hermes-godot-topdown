@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=3 uid="uid://roguewatch_test_room"]
+
+[ext_resource type="Script" path="res://scripts/dungeon/test_room.gd" id="1_test_room"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/combat/damage_zone.gd" id="3_damage_zone"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage_zone"]
+size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(1180, 620)
+
+[node name="TestRoom" type="Node2D"]
+script = ExtResource("1_test_room")
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.1, 0.085, 0.055, 1)
+polygon = PackedVector2Array(40, 40, 1240, 40, 1240, 680, 40, 680)
+
+[node name="RoomBorder" type="StaticBody2D" parent="."]
+position = Vector2(640, 360)
+collision_layer = 1
+collision_mask = 1
+
+[node name="BorderVisual" type="Polygon2D" parent="RoomBorder"]
+color = Color(0.28, 0.2, 0.1, 1)
+polygon = PackedVector2Array(-600, -320, 600, -320, 600, 320, -600, 320, -600, -288, -568, -288, -568, 288, 568, 288, 568, -288, -600, -288)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomBorder"]
+shape = SubResource("RectangleShape2D_wall")
+disabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+unique_name_in_owner = true
+position = Vector2(320, 360)
+
+[node name="DamageCog" type="Area2D" parent="."]
+position = Vector2(760, 360)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("3_damage_zone")
+damage_per_tick = 1
+tick_interval = 0.75
+
+[node name="DamageCogVisual" type="Polygon2D" parent="DamageCog"]
+color = Color(0.72, 0.16, 0.1, 0.72)
+polygon = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageCog"]
+shape = SubResource("RectangleShape2D_damage_zone")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUDPanel" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 448.0
+offset_bottom = 154.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUDPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUDPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Milestone 1 - Salle de test"
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Health: 5 / 5"
+
+[node name="HintLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "WASD/flèches: bouger | Space/clic/A: attaque | Shift/B: dash | zone rouge: dégâts"
+
+[node name="ReturnHubButton" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 170.0
+offset_right = 160.0
+offset_bottom = 202.0
+text = "Retour hub"

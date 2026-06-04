@@ -12,14 +12,14 @@ Statut: complété.
 
 ## Milestone 1: Fondation jouable
 
-Objectif:
+Statut: fondation implémentée.
 
 - Player movement top-down.
 - Direction facing.
 - Attaque melee devant le joueur.
 - Dash.
-- Health/damage.
-- Salle de test.
+- Health/damage vérifiable via zone de dégâts de test.
+- Salle de test jouable.
 - Input clavier/manette Xbox.
 
 ## Milestone 2: Combat et ennemis
