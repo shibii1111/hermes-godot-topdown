@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://roguewatch_hub_placeholder"]
+
+[ext_resource type="Script" path="res://scripts/core/hub_placeholder.gd" id="1_hub"]
+
+[node name="Hub" type="Node2D"]
+script = ExtResource("1_hub")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.09, 0.075, 0.045, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Hub central - Atelier de l'Horloger"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Fondation temporaire: upgrades, NPCs et portail seront ajoutés dans les prochains milestones."
+horizontal_alignment = 1
+
+[node name="StartRunButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Lancer une run"
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Retour menu"
