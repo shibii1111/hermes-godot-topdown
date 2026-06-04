@@ -18,9 +18,11 @@ signal health_changed(current_health: int, max_health: int)
 
 ## Connects health signals from the HealthComponent.
 func _ready() -> void:
+	_apply_permanent_upgrades()
 	health_component.health_changed.connect(_on_health_changed)
 	health_component.died.connect(_on_died)
 	combat.update_weapon_direction(facing.facing_direction)
+	health_component.health_changed.emit(health_component.current_health, health_component.max_health)
 
 
 ## Reads player intentions, updates components, then applies movement.
@@ -42,6 +44,15 @@ func _physics_process(delta: float) -> void:
 ## Public entry point for receiving damage from a test zone or enemy.
 func receive_damage(damage_data: Resource) -> void:
 	health_component.apply_damage(damage_data)
+
+
+## Applies permanent progression bonuses before the run begins.
+func _apply_permanent_upgrades() -> void:
+	var bonus_health: int = SaveManager.get_player_max_health_bonus()
+	if bonus_health <= 0:
+		return
+	health_component.max_health += bonus_health
+	health_component.current_health = health_component.max_health
 
 
 ## Rotates the small facing visual indicator in front of the player.

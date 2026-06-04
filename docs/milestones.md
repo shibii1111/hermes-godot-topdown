@@ -45,13 +45,13 @@ Status: foundation implemented.
 
 ## Milestone 4: Hub
 
-Goal:
+Status: foundation implemented.
 
-- Central Hub.
-- NPC or upgrade station.
-- Permanent currency.
-- Skill/weapon unlocks and upgrades.
-- Permanent progression saving.
+- Central hub UI with a workshop/portal layout.
+- Upgrade station for Reinforced Heart.
+- Permanent gears saved between runs.
+- Run payout transfers run gears into permanent gears on death/manual return.
+- Saved permanent progression influences future runs through max health upgrades.
 
 ## Milestone 5: Procedural Dungeons
 

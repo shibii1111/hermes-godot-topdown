@@ -109,15 +109,23 @@ func _update_xp_label() -> void:
 
 ## Simulates the minimal roguelite loop: return to the hub on death.
 func _on_player_died() -> void:
-	_resume_from_pause()
-	SignalBus.run_ended.emit("player_death")
-	SceneLoader.go_to_hub()
+	complete_run("player_death")
 
 
 ## Allows leaving the test room manually without dying.
 func _on_return_hub_pressed() -> void:
+	complete_run("manual_return")
+
+
+## Transfers run rewards into permanent progression, saves, and returns to the hub.
+func complete_run(reason: String) -> void:
 	_resume_from_pause()
-	SignalBus.run_ended.emit("manual_return")
+	if run_currency > 0:
+		SaveManager.add_permanent_currency(run_currency)
+		SaveManager.save_game()
+		run_currency = 0
+		_update_currency_label()
+	SignalBus.run_ended.emit(reason)
 	SceneLoader.go_to_hub()
 
 

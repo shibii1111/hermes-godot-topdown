@@ -1,11 +1,40 @@
 extends Node
 
-## Manages the prototype's permanent save data.
-## This foundation exposes only minimal data; later milestones will add upgrades and permanent inventory.
+## Manages permanent progression and save data for the roguelite loop.
+## Run scenes award gears here, while the hub spends them on persistent upgrades.
 
-const SAVE_PATH := "user://roguewatch_save.json"
+const DEFAULT_SAVE_PATH := "user://roguewatch_save.json"
+const REINFORCED_HEART := "reinforced_heart"
+const UPGRADE_DEFINITIONS := {
+	REINFORCED_HEART: {
+		"display_name": "Reinforced Heart",
+		"base_cost": 3,
+		"max_level": 3,
+		"description": "+1 max health per level for future runs."
+	}
+}
 
 var permanent_currency: int = 0
+var upgrade_levels: Dictionary = {}
+var _save_path: String = DEFAULT_SAVE_PATH
+
+
+## Loads saved progression when the autoload is created.
+func _ready() -> void:
+	load_game()
+
+
+## Allows validation scripts to use an isolated save file.
+func set_save_path(next_save_path: String) -> void:
+	_save_path = next_save_path
+
+
+## Clears in-memory progression for deterministic validation scripts.
+func reset_for_tests() -> void:
+	permanent_currency = 0
+	upgrade_levels.clear()
+	SignalBus.permanent_currency_changed.emit(permanent_currency)
+	SignalBus.upgrade_purchased.emit(REINFORCED_HEART, 0)
 
 
 ## Adds currency kept between runs and notifies the UI.
@@ -14,14 +43,96 @@ func add_permanent_currency(amount: int) -> void:
 	SignalBus.permanent_currency_changed.emit(permanent_currency)
 
 
+## Attempts to buy one level of a permanent upgrade.
+func purchase_upgrade(upgrade_id: String) -> bool:
+	if not UPGRADE_DEFINITIONS.has(upgrade_id):
+		return false
+	var current_level := get_upgrade_level(upgrade_id)
+	var max_level: int = int(UPGRADE_DEFINITIONS[upgrade_id].get("max_level", 0))
+	if current_level >= max_level:
+		return false
+	var cost := get_upgrade_cost(upgrade_id)
+	if permanent_currency < cost:
+		return false
+	permanent_currency -= cost
+	upgrade_levels[upgrade_id] = current_level + 1
+	SignalBus.permanent_currency_changed.emit(permanent_currency)
+	SignalBus.upgrade_purchased.emit(upgrade_id, current_level + 1)
+	save_game()
+	return true
+
+
+## Returns the current purchased level for a permanent upgrade.
+func get_upgrade_level(upgrade_id: String) -> int:
+	return int(upgrade_levels.get(upgrade_id, 0))
+
+
+## Returns the cost of the next upgrade level.
+func get_upgrade_cost(upgrade_id: String) -> int:
+	if not UPGRADE_DEFINITIONS.has(upgrade_id):
+		return 0
+	var base_cost: int = int(UPGRADE_DEFINITIONS[upgrade_id].get("base_cost", 0))
+	return base_cost + get_upgrade_level(upgrade_id) * 2
+
+
+## Returns true when the upgrade cannot be bought anymore.
+func is_upgrade_maxed(upgrade_id: String) -> bool:
+	if not UPGRADE_DEFINITIONS.has(upgrade_id):
+		return true
+	return get_upgrade_level(upgrade_id) >= int(UPGRADE_DEFINITIONS[upgrade_id].get("max_level", 0))
+
+
+## Returns the display metadata for a permanent upgrade.
+func get_upgrade_definition(upgrade_id: String) -> Dictionary:
+	return UPGRADE_DEFINITIONS.get(upgrade_id, {})
+
+
+## Converts permanent heart upgrades into player max health bonus.
+func get_player_max_health_bonus() -> int:
+	return get_upgrade_level(REINFORCED_HEART)
+
+
+## Saves permanent progression to disk as JSON.
+func save_game() -> bool:
+	var file := FileAccess.open(_save_path, FileAccess.WRITE)
+	if file == null:
+		push_warning("Unable to open save file for writing: %s" % _save_path)
+		return false
+	file.store_string(JSON.stringify(to_dict(), "\t"))
+	return true
+
+
+## Loads permanent progression from disk if a save exists.
+func load_game() -> bool:
+	if not FileAccess.file_exists(_save_path):
+		return false
+	var file := FileAccess.open(_save_path, FileAccess.READ)
+	if file == null:
+		push_warning("Unable to open save file for reading: %s" % _save_path)
+		return false
+	var parsed = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_warning("Save file is not a valid dictionary: %s" % _save_path)
+		return false
+	from_dict(parsed)
+	return true
+
+
 ## Serializes permanent data into a simple dictionary.
 func to_dict() -> Dictionary:
 	return {
-		"permanent_currency": permanent_currency
+		"permanent_currency": permanent_currency,
+		"upgrade_levels": upgrade_levels
 	}
 
 
 ## Reloads permanent data from a validated dictionary.
 func from_dict(data: Dictionary) -> void:
-	permanent_currency = int(data.get("permanent_currency", 0))
+	permanent_currency = max(0, int(data.get("permanent_currency", 0)))
+	upgrade_levels.clear()
+	var saved_upgrades: Dictionary = data.get("upgrade_levels", {})
+	for upgrade_id in saved_upgrades.keys():
+		upgrade_levels[String(upgrade_id)] = max(0, int(saved_upgrades[upgrade_id]))
 	SignalBus.permanent_currency_changed.emit(permanent_currency)
+	for upgrade_id in upgrade_levels.keys():
+		SignalBus.upgrade_purchased.emit(upgrade_id, get_upgrade_level(upgrade_id))

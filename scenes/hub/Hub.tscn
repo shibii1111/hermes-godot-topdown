@@ -1,51 +1,111 @@
 [gd_scene load_steps=2 format=3 uid="uid://roguewatch_hub_placeholder"]
 
-[ext_resource type="Script" path="res://scripts/core/hub_placeholder.gd" id="1_hub"]
+[ext_resource type="Script" path="res://scripts/hub/hub.gd" id="1_hub"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_hub")
 
+[node name="WorkshopFloor" type="Polygon2D" parent="."]
+color = Color(0.09, 0.075, 0.045, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+
+[node name="GearBackdrop" type="Polygon2D" parent="."]
+position = Vector2(184, 560)
+color = Color(0.24, 0.16, 0.07, 0.65)
+polygon = PackedVector2Array(-68, -18, -32, -68, 32, -68, 68, -18, 42, 58, -42, 58)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.09, 0.075, 0.045, 1)
+[node name="RootMargin" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 40.0
+offset_right = -48.0
+offset_bottom = -40.0
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
-offset_right = 1280.0
-offset_bottom = 720.0
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/CenterContainer"]
+[node name="Columns" type="HBoxContainer" parent="CanvasLayer/RootMargin"]
 layout_mode = 2
+theme_override_constants/separation = 28
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer/PanelContainer"]
+[node name="HubPanel" type="PanelContainer" parent="CanvasLayer/RootMargin/Columns"]
 layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer"]
+[node name="HubMargin" type="MarginContainer" parent="CanvasLayer/RootMargin/Columns/HubPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="HubInfo" type="VBoxContainer" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
 layout_mode = 2
 text = "Central Hub - Clockmaker's Workshop"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Description" type="Label" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
 layout_mode = 2
-text = "Temporary foundation: upgrades, NPCs, and portal will be added in upcoming milestones."
+text = "Repair gearwork, spend permanent gears, and enter the next clockwork run."
+autowrap_mode = 3
 horizontal_alignment = 1
 
-[node name="StartRunButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="PermanentCurrencyLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Start Run"
+text = "Permanent gears: 0"
+horizontal_alignment = 1
 
-[node name="MenuButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RunPortalButton" type="Button" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enter Run Portal"
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Back to Menu"
+
+[node name="UpgradePanel" type="PanelContainer" parent="CanvasLayer/RootMargin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UpgradeMargin" type="MarginContainer" parent="CanvasLayer/RootMargin/Columns/UpgradePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="UpgradeStation" type="VBoxContainer" parent="CanvasLayer/RootMargin/Columns/UpgradePanel/UpgradeMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="StationTitle" type="Label" parent="CanvasLayer/RootMargin/Columns/UpgradePanel/UpgradeMargin/UpgradeStation"]
+layout_mode = 2
+text = "Upgrade Station"
+horizontal_alignment = 1
+
+[node name="UpgradeStatusLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/UpgradePanel/UpgradeMargin/UpgradeStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reinforced Heart Lv. 0 / 3"
+horizontal_alignment = 1
+
+[node name="UpgradeDescriptionLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/UpgradePanel/UpgradeMargin/UpgradeStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+1 max health per level for future runs."
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="UpgradeButton" type="Button" parent="CanvasLayer/RootMargin/Columns/UpgradePanel/UpgradeMargin/UpgradeStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Upgrade - 3 gears"
