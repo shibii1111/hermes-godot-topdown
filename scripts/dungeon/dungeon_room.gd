@@ -4,7 +4,7 @@ class_name DungeonRoom
 ## Runtime room prefab used by DungeonRoot.
 ## A room displays available Area2D portals, but DungeonRoot owns graph traversal.
 
-signal exit_requested(direction: String)
+signal exit_requested(direction: String, source_room_id: String)
 
 const ROOM_CENTER := Vector2(960, 584)
 const PORTAL_SPAWN_OFFSET := 176.0
@@ -108,4 +108,4 @@ func _set_portal_state(portal: Area2D, direction: String) -> void:
 
 ## Requests a graph transition after the player enters an enabled portal Area2D.
 func _on_portal_entered(direction: String) -> void:
-	exit_requested.emit(direction)
+	exit_requested.emit(direction, room_id)

@@ -63,15 +63,21 @@ func generate_dungeon(seed_value: int = 0) -> void:
 
 
 ## Moves to the neighbor room connected by the requested cardinal direction.
-func transition_to_neighbor(direction: String) -> void:
+## When a room id is supplied, stale portal signals from unloaded rooms are ignored.
+func transition_to_neighbor(direction: String, source_room_id: String = "") -> void:
+	if source_room_id != "" and source_room_id != current_room_id:
+		return
 	if transition_in_progress:
 		return
 	transition_in_progress = true
-	_complete_transition_to_neighbor.call_deferred(direction)
+	_complete_transition_to_neighbor.call_deferred(direction, current_room_id)
 
 
 ## Completes a portal transition outside the Area2D body_entered physics callback.
-func _complete_transition_to_neighbor(direction: String) -> void:
+func _complete_transition_to_neighbor(direction: String, source_room_id: String = "") -> void:
+	if source_room_id != "" and source_room_id != current_room_id:
+		transition_in_progress = false
+		return
 	if current_room_id == "" or not dungeon_graph.has("rooms"):
 		transition_in_progress = false
 		return
@@ -126,8 +132,7 @@ func complete_run(reason: String) -> void:
 
 ## Instantiates the scene assigned to the current graph room and connects room systems.
 func _load_current_room(entry_direction: String) -> void:
-	if active_room != null:
-		active_room.queue_free()
+	_unload_active_room()
 	var room_record: Dictionary = dungeon_graph["rooms"][current_room_id]
 	var packed_scene := load(String(room_record["scene_path"])) as PackedScene
 	if packed_scene == null:
@@ -142,6 +147,17 @@ func _load_current_room(entry_direction: String) -> void:
 	_connect_enemies()
 	_position_player_for_room(entry_direction)
 	_update_room_labels(room_record)
+
+
+## Removes the previous room from the scene tree before loading the next one.
+## This prevents queued-for-deletion portal Area2Ds from firing stale transitions after teleporting the player.
+func _unload_active_room() -> void:
+	if active_room == null:
+		return
+	if active_room.get_parent() != null:
+		active_room.get_parent().remove_child(active_room)
+	active_room.queue_free()
+	active_room = null
 
 
 ## Connects enemies inside the active room to the player and run reward system.
