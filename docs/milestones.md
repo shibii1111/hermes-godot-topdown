@@ -71,8 +71,7 @@ Goal:
 - M6.0: Initial art pipeline and first sprite replacement.
 - M6.0.1: Approved A1.5 clean readable clockpunk style direction.
 - M6.0.2: Replace first high-impact placeholders with A1.5-style production placeholders.
-- XP/level up.
-- Stats.
+- M6.1: Run XP, level-up rollover, enemy XP rewards, and temporary damage stat bonuses.
 - Loot.
 - Equipment.
 - Skills/spells.

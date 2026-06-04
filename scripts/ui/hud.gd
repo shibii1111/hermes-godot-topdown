@@ -7,6 +7,7 @@ class_name HUD
 @onready var health_label: Label = %HealthLabel
 @onready var run_currency_label: Label = %RunCurrencyLabel
 @onready var xp_label: Label = %XPLabel
+@onready var stats_label: Label = %StatsLabel
 
 
 ## Updates the player's current and maximum health text.
@@ -22,3 +23,8 @@ func set_run_currency(currency_value: int) -> void:
 ## Updates the current run XP and level text.
 func set_xp(current_xp: int, required_xp: int, level: int) -> void:
 	xp_label.text = "Level %d - XP: %d / %d" % [level, current_xp, required_xp]
+
+
+## Updates the current run stat bonuses and counters.
+func set_run_stats(stats_text: String) -> void:
+	stats_label.text = stats_text

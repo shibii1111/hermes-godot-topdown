@@ -10,6 +10,12 @@ class_name PlayerCombat
 
 var _cooldown_remaining: float = 0.0
 var _facing_direction: Vector2 = Vector2.DOWN
+var _base_damage_amount: int = 1
+
+
+## Captures base weapon values before run-only level bonuses are applied.
+func _ready() -> void:
+	_base_damage_amount = melee_weapon.damage_amount
 
 
 ## Decreases the attack cooldown on each physics frame.
@@ -33,3 +39,8 @@ func try_attack(source: Node) -> bool:
 	_cooldown_remaining = attack_cooldown
 	melee_weapon.swing(source, _facing_direction)
 	return true
+
+
+## Applies temporary run-level damage without changing the scene's base weapon value.
+func set_damage_bonus(damage_bonus: int) -> void:
+	melee_weapon.damage_amount = _base_damage_amount + max(0, damage_bonus)

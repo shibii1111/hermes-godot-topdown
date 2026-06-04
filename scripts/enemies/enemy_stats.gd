@@ -8,4 +8,5 @@ class_name EnemyStats
 @export var move_speed: float = 90.0
 @export var contact_damage: int = 1
 @export var drop_currency: int = 1
+@export var drop_xp: int = 2
 @export var aggro_range: float = 260.0

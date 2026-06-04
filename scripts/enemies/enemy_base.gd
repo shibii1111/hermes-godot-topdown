@@ -4,11 +4,12 @@ class_name EnemyBase
 ## Common base for clockpunk enemies.
 ## It handles targeting, simple AI movement, health/damage, contact damage, and minimal drops.
 
-signal died(enemy: Node, currency_value: int)
+signal died(enemy: Node, currency_value: int, xp_value: int)
 
 @export var move_speed: float = 85.0
 @export var contact_damage: int = 1
 @export var drop_currency: int = 1
+@export var drop_xp: int = 2
 @export var hit_flash_time: float = 0.08
 
 @onready var health_component: Node = %HealthComponent
@@ -72,7 +73,7 @@ func _update_hit_flash(delta: float) -> void:
 		body_visual.modulate = _base_modulate
 
 
-## Emits the drop, then removes the enemy from the scene.
+## Emits the run rewards, then removes the enemy from the scene.
 func _on_died() -> void:
-	died.emit(self, drop_currency)
+	died.emit(self, drop_currency, drop_xp)
 	queue_free()

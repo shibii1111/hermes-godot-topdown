@@ -14,6 +14,7 @@ var run_currency: int = 0
 var run_xp: int = 0
 var run_level: int = 1
 var xp_required: int = 10
+var enemies_defeated: int = 0
 
 
 ## Connects the player, enemies, and temporary test UI controls.
@@ -86,13 +87,16 @@ func _connect_enemies() -> void:
 
 
 ## Adds run currency and XP dropped by a dead enemy.
-func _on_enemy_died(_enemy: Node, currency_value: int) -> void:
+func _on_enemy_died(_enemy: Node, currency_value: int, xp_value: int) -> void:
 	run_currency += currency_value
-	run_xp += currency_value * 2
+	run_xp += xp_value
+	enemies_defeated += 1
 	if run_xp >= xp_required:
 		run_xp -= xp_required
 		run_level += 1
 		xp_required += 5
+		if player.has_method("set_run_damage_bonus"):
+			player.set_run_damage_bonus(run_level - 1)
 	_update_currency_label()
 	_update_xp_label()
 
@@ -105,6 +109,7 @@ func _update_currency_label() -> void:
 ## Updates the temporary XP display shown in the run HUD.
 func _update_xp_label() -> void:
 	hud.set_xp(run_xp, xp_required, run_level)
+	hud.set_run_stats("Stats: DMG +%d | Defeated: %d" % [run_level - 1, enemies_defeated])
 
 
 ## Simulates the minimal roguelite loop: return to the hub on death.

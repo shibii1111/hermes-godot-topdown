@@ -46,9 +46,17 @@ func receive_damage(damage_data: Resource) -> void:
 	health_component.apply_damage(damage_data)
 
 
+## Applies temporary run-level combat bonuses pushed by the active run progression.
+func set_run_damage_bonus(damage_bonus: int) -> void:
+	combat.set_damage_bonus(damage_bonus)
+
+
 ## Applies permanent progression bonuses before the run begins.
 func _apply_permanent_upgrades() -> void:
-	var bonus_health: int = SaveManager.get_player_max_health_bonus()
+	if not get_tree().root.has_node("SaveManager"):
+		return
+	var save_manager: Node = get_tree().root.get_node("SaveManager")
+	var bonus_health: int = save_manager.get_player_max_health_bonus()
 	if bonus_health <= 0:
 		return
 	health_component.max_health += bonus_health

@@ -5,6 +5,7 @@ class_name DungeonRoot
 ## It owns graph traversal, active room swapping, player placement, and run reward payout.
 
 const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator.gd")
+const RunProgressionScript := preload("res://scripts/progression/run_progression.gd")
 
 @onready var active_room_container: Node2D = %ActiveRoomContainer
 @onready var player: Node = %Player
@@ -19,10 +20,7 @@ const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator
 var dungeon_graph: Dictionary = {}
 var current_room_id: String = ""
 var active_room: Node = null
-var run_currency: int = 0
-var run_xp: int = 0
-var run_level: int = 1
-var xp_required: int = 10
+var progression = RunProgressionScript.new()
 var transition_in_progress: bool = false
 var portal_transition_blocked_until_msec: int = 0
 
@@ -30,6 +28,8 @@ var portal_transition_blocked_until_msec: int = 0
 ## Starts a generated run and wires shared run UI.
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	progression.changed.connect(_on_progression_changed)
+	progression.leveled_up.connect(_on_run_leveled_up)
 	player.health_changed.connect(_on_player_health_changed)
 	player.died.connect(_on_player_died)
 	pause_menu.resume_requested.connect(_resume_from_pause)
@@ -37,8 +37,7 @@ func _ready() -> void:
 	inventory_menu.close_requested.connect(_resume_from_inventory)
 	return_hub_button.pressed.connect(func() -> void: complete_run("manual_return"))
 	_on_player_health_changed(player.health_component.current_health, player.health_component.max_health)
-	_update_currency_label()
-	_update_xp_label()
+	_update_progression_labels()
 	generate_dungeon(Time.get_unix_time_from_system())
 
 
@@ -125,11 +124,11 @@ func trigger_special_ui() -> void:
 ## Transfers run rewards into permanent progression, saves, and returns to the hub.
 func complete_run(reason: String) -> void:
 	_resume_from_pause()
-	if run_currency > 0:
-		SaveManager.add_permanent_currency(run_currency)
+	if progression.run_currency > 0:
+		SaveManager.add_permanent_currency(progression.run_currency)
 		SaveManager.save_game()
-		run_currency = 0
-		_update_currency_label()
+		progression.run_currency = 0
+		_update_progression_labels()
 	SignalBus.run_ended.emit(reason)
 	SceneLoader.go_to_hub()
 
@@ -203,25 +202,26 @@ func _on_player_health_changed(current_health: int, max_health: int) -> void:
 
 
 ## Adds run currency and XP dropped by a dead enemy.
-func _on_enemy_died(_enemy: Node, currency_value: int) -> void:
-	run_currency += currency_value
-	run_xp += currency_value * 2
-	if run_xp >= xp_required:
-		run_xp -= xp_required
-		run_level += 1
-		xp_required += 5
-	_update_currency_label()
-	_update_xp_label()
+func _on_enemy_died(_enemy: Node, currency_value: int, xp_value: int) -> void:
+	progression.grant_enemy_reward(currency_value, xp_value)
 
 
-## Updates the run currency display earned during the generated run.
-func _update_currency_label() -> void:
-	hud.set_run_currency(run_currency)
+## Applies run-level stat bonuses when the XP curve grants a level.
+func _on_run_leveled_up(_new_level: int, damage_bonus: int) -> void:
+	if player.has_method("set_run_damage_bonus"):
+		player.set_run_damage_bonus(damage_bonus)
 
 
-## Updates the temporary XP display shown in the run HUD.
-func _update_xp_label() -> void:
-	hud.set_xp(run_xp, xp_required, run_level)
+## Refreshes HUD labels when run-only progression changes.
+func _on_progression_changed(_progression: RefCounted) -> void:
+	_update_progression_labels()
+
+
+## Updates the run currency, XP, level, and stat displays.
+func _update_progression_labels() -> void:
+	hud.set_run_currency(progression.run_currency)
+	hud.set_xp(progression.current_xp, progression.xp_to_next_level, progression.level)
+	hud.set_run_stats(progression.get_stats_text())
 
 
 ## Returns to the hub with collected rewards when the player dies.

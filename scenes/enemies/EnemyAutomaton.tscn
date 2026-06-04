@@ -24,6 +24,7 @@ script = ExtResource("1_enemy")
 move_speed = 72.0
 contact_damage = 1
 drop_currency = 2
+drop_xp = 6
 
 [node name="BodyVisual" type="Sprite2D" parent="."]
 unique_name_in_owner = true
