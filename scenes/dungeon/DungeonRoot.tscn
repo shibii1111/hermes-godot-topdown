@@ -1,46 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://roguewatch_dungeon_root"]
+[gd_scene load_steps=7 format=3 uid="uid://roguewatch_dungeon_root"]
 
 [ext_resource type="Script" path="res://scripts/dungeon/dungeon_root.gd" id="1_dungeon"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="4_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/InventoryMenu.tscn" id="5_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SpecialIndicator.tscn" id="6_special"]
 
 [node name="DungeonRoot" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_dungeon")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="ActiveRoomContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.045, 0.055, 0.065, 1)
+[node name="Player" parent="." instance=ExtResource("2_player")]
+unique_name_in_owner = true
+position = Vector2(640, 392)
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
-offset_right = 1280.0
-offset_bottom = 720.0
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+unique_name_in_owner = true
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/CenterContainer"]
+[node name="RunInfoLayer" type="CanvasLayer" parent="."]
+
+[node name="InfoPanel" type="PanelContainer" parent="RunInfoLayer"]
+offset_left = 16.0
+offset_top = 92.0
+offset_right = 310.0
+offset_bottom = 160.0
+
+[node name="MarginContainer" type="MarginContainer" parent="RunInfoLayer/InfoPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RunInfoLayer/InfoPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer/PanelContainer"]
+[node name="RoomCounterLabel" type="Label" parent="RunInfoLayer/InfoPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+text = "Room 1 / 10"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer"]
+[node name="RoomTypeLabel" type="Label" parent="RunInfoLayer/InfoPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 16
+text = "Current: Start"
 
-[node name="Title" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Run Prototype - Mechanical Dungeon"
-horizontal_alignment = 1
-
-[node name="Description" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Temporary foundation: procedural generation, rooms, and combat will be added after validation."
-horizontal_alignment = 1
-
-[node name="ReturnHubButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ReturnHubButton" type="Button" parent="RunInfoLayer/InfoPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Return to Hub"
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+unique_name_in_owner = true
+
+[node name="InventoryMenu" parent="." instance=ExtResource("5_inventory")]
+unique_name_in_owner = true
+
+[node name="SpecialIndicator" parent="." instance=ExtResource("6_special")]
+unique_name_in_owner = true

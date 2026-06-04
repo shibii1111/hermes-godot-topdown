@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3 uid="uid://roguewatch_room_08"]
+
+[ext_resource type="Script" path="res://scripts/dungeon/dungeon_room.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/EnemyAutomaton.tscn" id="2_automaton"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/EnemyMechanicalRat.tscn" id="3_rat"]
+
+[node name="Room08" type="Node2D"]
+script = ExtResource("1_room")
+room_title = "Treasure Gearroom"
+room_variant = "reward"
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.12, 0.1, 0.045, 1)
+polygon = PackedVector2Array(72, 88, 1208, 88, 1208, 656, 72, 656)
+
+[node name="BrassBorder" type="Polygon2D" parent="."]
+color = Color(0.31, 0.21, 0.09, 1)
+polygon = PackedVector2Array(48, 64, 1232, 64, 1232, 680, 48, 680, 48, 622, 106, 622, 106, 122, 1174, 122, 1174, 622, 48, 622)
+
+[node name="ClockworkProp" type="Polygon2D" parent="."]
+position = Vector2(356, 394)
+color = Color(0.58, 0.39, 0.14, 0.78)
+polygon = PackedVector2Array(-28, -8, -8, -28, 20, -24, 34, -2, 20, 24, -12, 22)
+
+[node name="EnemySpawns" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="RoomOverlay" type="CanvasLayer" parent="."]
+
+[node name="TitlePanel" type="PanelContainer" parent="RoomOverlay"]
+offset_left = 430.0
+offset_top = 16.0
+offset_right = 850.0
+offset_bottom = 76.0
+
+[node name="TitleMargin" type="MarginContainer" parent="RoomOverlay/TitlePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="TitleVBox" type="VBoxContainer" parent="RoomOverlay/TitlePanel/TitleMargin"]
+layout_mode = 2
+
+[node name="RoomTitleLabel" type="Label" parent="RoomOverlay/TitlePanel/TitleMargin/TitleVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Treasure Gearroom"
+horizontal_alignment = 1
+
+[node name="RoomTypeLabel" type="Label" parent="RoomOverlay/TitlePanel/TitleMargin/TitleVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Type: Reward"
+horizontal_alignment = 1
+
+[node name="NorthDoorButton" type="Button" parent="RoomOverlay"]
+unique_name_in_owner = true
+offset_left = 590.0
+offset_top = 84.0
+offset_right = 708.0
+offset_bottom = 126.0
+text = "North"
+
+[node name="SouthDoorButton" type="Button" parent="RoomOverlay"]
+unique_name_in_owner = true
+offset_left = 590.0
+offset_top = 650.0
+offset_right = 708.0
+offset_bottom = 692.0
+text = "South"
+
+[node name="EastDoorButton" type="Button" parent="RoomOverlay"]
+unique_name_in_owner = true
+offset_left = 1170.0
+offset_top = 348.0
+offset_right = 1288.0
+offset_bottom = 390.0
+text = "East"
+
+[node name="WestDoorButton" type="Button" parent="RoomOverlay"]
+unique_name_in_owner = true
+offset_left = 26.0
+offset_top = 348.0
+offset_right = 144.0
+offset_bottom = 390.0
+text = "West"

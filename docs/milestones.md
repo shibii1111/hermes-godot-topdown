@@ -55,13 +55,14 @@ Status: foundation implemented.
 
 ## Milestone 5: Procedural Dungeons
 
-Goal:
+Status: foundation implemented.
 
-- Reliable procedural generation.
-- Room/map assembly.
-- At least 10 usable maps/rooms.
-- Entry from the hub.
-- Return to the hub on death.
+- Binding-of-Isaac-inspired branching room graph.
+- `DungeonGenerator` creates a reliable 10-room dungeon with a main path and side branches.
+- `DungeonRoot` loads one active room at a time and keeps the player/HUD persistent across transitions.
+- 10 playable room prefabs exist under `scenes/dungeon/rooms/`.
+- Cardinal door buttons connect generated room neighbors.
+- Hub run portal now starts the generated dungeon root.
 
 ## Milestone 6: RPG Systems
 

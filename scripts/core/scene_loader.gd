@@ -5,7 +5,7 @@ extends Node
 
 const START_MENU_SCENE := "res://scenes/menus/StartMenu.tscn"
 const HUB_SCENE := "res://scenes/hub/Hub.tscn"
-const DUNGEON_SCENE := "res://scenes/dungeon/TestRoom.tscn"
+const DUNGEON_SCENE := "res://scenes/dungeon/DungeonRoot.tscn"
 
 var _scene_container: Node = null
 var _current_scene: Node = null
