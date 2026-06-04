@@ -68,7 +68,8 @@ Status: foundation implemented.
 
 Goal:
 
-- M6.0: Pixel art pipeline and first sprite replacement.
+- M6.0: Initial art pipeline and first sprite replacement.
+- M6.0.1: Approved A1.5 clean readable clockpunk style direction.
 - XP/level up.
 - Stats.
 - Loot.
@@ -80,14 +81,15 @@ Goal:
 Art integration rule:
 
 - Do not defer all real sprites to the final polish pass.
-- Add or replace the relevant original 32x32 pixel art alongside each gameplay slice.
+- Add or replace relevant original stylized art alongside each gameplay slice.
+- Use even-numbered, non-square source canvases fitted to the silhouette instead of forcing every sprite into a fixed square resolution.
 - Keep collisions and gameplay data independent from sprite visuals.
 
 ## Milestone 7: Polish prototype
 
 Goal:
 
-- Improve and complete coherent 32x32 assets introduced progressively during M6.
+- Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.
 - Minimal balancing.

@@ -21,7 +21,7 @@ Initial foundation:
 - Generated 10-room branching dungeon with Area2D room portals.
 - Limited autoloads: `GameState`, `SceneLoader`, `SaveManager`, `SignalBus`.
 - Keyboard/mouse and Xbox controller input map prepared.
-- Placeholder geometry is temporary; original 32x32 PNG pixel art will live under `assets/pixel/`.
+- Placeholder geometry is temporary; original stylized 2D art follows the A1.5 clean readable clockpunk direction in `docs/art_direction.md`.
 
 ## Verification
 
@@ -42,5 +42,5 @@ godot --path .
 - `docs/architecture.md`: proposed technical organization.
 - `docs/controls.md`: keyboard/mouse and Xbox controller mapping.
 - `docs/milestones.md`: progressive prototype breakdown.
-- `docs/art_direction.md`: pixel art direction, scale, palette, and progressive integration rules.
-- `assets/pixel/README.md`: pixel art asset plan and licensing rules.
+- `docs/art_direction.md`: clean readable clockpunk art direction, scale, palette, and progressive integration rules.
+- `assets/pixel/README.md`: temporary asset folder plan and licensing rules.

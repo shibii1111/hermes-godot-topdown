@@ -2,48 +2,82 @@
 
 ## Goal
 
-RogueWatch uses original 32x32 pixel art with a clockpunk fantasy tone. Art should be integrated progressively with each gameplay milestone so collisions, pivots, hitboxes, HUD layout, and readability evolve together instead of being replaced in one large polish pass.
+RogueWatch uses original stylized 2D art with a clean readable clockpunk direction. Art should be integrated progressively with each gameplay milestone so collisions, pivots, hitboxes, HUD layout, and readability evolve together instead of being replaced in one large polish pass.
+
+The approved baseline is **A1.5: Clean Readable Clockpunk**.
 
 ## Visual Pillars
 
+- **Clean readable silhouettes:** sprites must read clearly during fast top-down action at 1920x1080.
 - **Clockpunk machinery:** gears, springs, copper pipes, brass frames, steel plating, teal energy.
-- **Readable top-down action:** silhouettes must remain clear at gameplay scale.
+- **Human player, mechanical threats:** the player should stay approachable and adventurer-like; enemies, portals, props, and interactables can lean harder into machinery.
+- **Simple hand-drawn/vector-like rendering:** thick dark outlines, flat fills, limited cel shading, and readable shapes. Avoid strict pixel art, photorealism, noisy texture, or tiny details that disappear at gameplay scale.
 - **Prototype-first polish:** early sprites may be simple, but they should use the final folder structure, pivots, and scene architecture.
 - **Original assets only:** do not import commercial, unlicensed, or third-party art.
 
-## Sprite Scale
+## Style Baseline: A1.5 Clean Readable Clockpunk
 
-- Characters: `32x32` PNG, transparent background.
-- Pickups/icons: `32x32` PNG unless a smaller UI-only icon is explicitly needed.
-- Dungeon/hub tiles: `64x64` PNG tiles for now.
-- Portals: horizontal `96x32`, vertical `32x96` PNGs.
-- Larger props should be multiples of 32 pixels.
+Use this mix as the current target:
+
+- **Player:** A1 readability and warmth. Rounded/human silhouette, cloak, goggles/teal eyes, clockmaker-adventurer feel, not overly robotic.
+- **Enemies:** A3 mechanical identity. Harder brass plates, visible gears, riggable/separable-looking parts, more hostile silhouettes.
+- **Portal/props:** A3 mechanical identity. Larger brass/copper machinery with teal energy cores.
+- **Palette/readability:** A1 clarity. Warm brass/copper against dark dungeon/workshop backgrounds, with teal energy as the main accent.
+
+Reference exploration sheet:
+
+- `/docs/art/a15_clean_readable_clockpunk.png`
+
+## Asset Scale
+
+Sprites are **not** required to be square. Source dimensions should generally use even-numbered widths and heights to avoid half-pixel pivots and export ambiguity.
+
+Source size and displayed gameplay size are separate decisions:
+
+- Source canvas: large enough for the silhouette, outline, animation padding, and effects.
+- Displayed size: chosen for readability in a 1920x1080 gameplay viewport.
+- Collision/hitboxes: kept independent from sprite artwork.
+
+Baseline source canvas guidelines:
+
+- Player: around `192x224`, displayed around 110-140 px tall in normal gameplay.
+- Player attack/slash effects: wide non-square canvases around `256x128` or larger as needed.
+- Mechanical rat/small enemies: wide low canvases around `160x112` to `192x128`.
+- Humanoid/mechanical enemies: around `208x224` to `256x256`.
+- Pickups/icons: around `64x64` to `96x96`, square or non-square depending on silhouette.
+- Horizontal portals: around `384x192` or larger.
+- Vertical portals: around `192x384` or larger.
+- Props: free even-numbered canvases fitted to the silhouette, commonly `128x96`, `180x150`, `256x180`, or larger.
+- Bosses/large fixtures: `512x384` or larger, depending on silhouette.
 
 ## Palette Direction
 
-- Brass: warm yellow/orange metal for machinery and important outlines.
-- Copper: darker orange-brown for bodies, frames, and aged metal.
-- Dark steel: grey mechanical parts and enemy limbs.
-- Teal energy: portals, magical clockwork power, special effects.
-- Cream highlights: UI accents, gleams, readable tiny details.
-- Deep brown/black: floors, shadows, negative space.
+- Brass: warm yellow/orange metal for machinery, outlines, trims, and important readable accents.
+- Copper: darker orange-brown for bodies, frames, aged metal, and warm shadows.
+- Dark steel: grey mechanical parts, enemy limbs, weapon parts, and exposed mechanisms.
+- Teal energy: portals, magical clockwork power, eyes, cores, special effects, and high-priority interactables.
+- Cream highlights: UI accents, gleams, readable small details.
+- Deep brown/black: floors, shadows, negative space, and outline color.
+
+## Pivot and Collision Rules
+
+- Keep gameplay collisions independent from sprite shapes.
+- Character and enemy pivots should generally sit near the feet/base contact point, not the center of the source canvas.
+- Pickups and props can pivot at visual center unless gameplay interaction needs a base pivot.
+- Portals should pivot at the doorway/threshold center so placement and spawn offsets stay predictable.
+- Prefer `Sprite2D`, `AnimatedSprite2D`, or composed Node2D visual children under existing gameplay nodes.
+- Preserve stable node names like `BodyVisual`, `WeaponVisual`, and `Visual` so scripts/tests can keep finding them.
 
 ## Integration Rules
 
-- Keep gameplay collisions independent from sprite shapes.
-- Prefer `Sprite2D` or `AnimatedSprite2D` visuals as children of existing gameplay nodes.
-- Preserve stable node names like `BodyVisual`, `WeaponVisual`, and `Visual` so scripts/tests can keep finding them.
 - Replace placeholder geometry gradually per milestone.
+- Avoid large-bang art migrations; every gameplay feature that introduces a new visible object should include the correct style direction from the start.
 - Every visual pass should still pass headless scene loading and gameplay validations.
+- Commit production-ready assets as `.png` files with their Godot `.import` metadata.
+- Keep exploratory sketches outside the project until a direction is accepted; accepted references may be copied under `docs/art/`.
 
-## First Sprite Batch
+## Current Status
 
-M6.0 introduces the initial original pixel art pipeline and replaces high-impact placeholders:
+M6.0 introduced an initial pixel-art-oriented sprite pipeline. M6.0.1 pivots the approved direction away from strict `32x32` pixel art and toward A1.5 clean readable clockpunk.
 
-- Player: `assets/pixel/player/clockmaker_player.png`
-- Melee slash: `assets/pixel/player/brass_slash.png`
-- Automaton: `assets/pixel/enemies/clockwork_automaton.png`
-- Mechanical rat: `assets/pixel/enemies/mechanical_rat.png`
-- Gear pickup/icon: `assets/pixel/items/gear_pickup.png`, `assets/pixel/ui/gear_icon.png`
-- Dungeon portals: `assets/pixel/dungeon/portal_horizontal.png`, `assets/pixel/dungeon/portal_vertical.png`
-- Dungeon/hub floor tile seeds: `assets/pixel/dungeon/clockwork_floor_tile.png`, `assets/pixel/hub/workshop_floor_tile.png`
+Existing M6.0 pixel assets can remain temporarily as placeholders, but future production sprites should follow this document instead of the earlier square pixel-art constraints.
