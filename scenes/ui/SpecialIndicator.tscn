@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://roguewatch_special_indicator"]
+
+[ext_resource type="Script" path="res://scripts/ui/special_indicator.gd" id="1_special"]
+
+[node name="SpecialIndicator" type="Control"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -92.0
+offset_right = -12.0
+offset_bottom = -12.0
+script = ExtResource("1_special")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Clockburst ready"
+
+[node name="CooldownBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 100.0
+show_percentage = false

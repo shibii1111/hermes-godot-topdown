@@ -35,13 +35,13 @@ Status: foundation implemented.
 
 ## Milestone 3: UI and Menus
 
-Goal:
+Status: foundation implemented.
 
-- Start menu.
-- Pause menu via Start.
-- HUD health/currency/XP.
-- Inventory via Y.
-- Special/spell via X with an extensible foundation.
+- Existing start menu kept functional.
+- Pause menu via Start/Escape.
+- HUD health/run currency/XP.
+- Inventory overlay via Y/I with 12 placeholder slots and equipment summary.
+- Special/spell feedback via X/Q with an extensible Clockburst indicator.
 
 ## Milestone 4: Hub
 

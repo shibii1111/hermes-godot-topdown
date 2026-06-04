@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://roguewatch_test_room"]
+[gd_scene load_steps=12 format=3 uid="uid://roguewatch_test_room"]
 
 [ext_resource type="Script" path="res://scripts/dungeon/test_room.gd" id="1_test_room"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/combat/damage_zone.gd" id="3_damage_zone"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemyAutomaton.tscn" id="4_automaton"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemyMechanicalRat.tscn" id="5_rat"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="7_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/InventoryMenu.tscn" id="8_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SpecialIndicator.tscn" id="9_special"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_damage_zone"]
 size = Vector2(96, 96)
@@ -13,6 +17,7 @@ size = Vector2(96, 96)
 size = Vector2(1180, 620)
 
 [node name="TestRoom" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_test_room")
 
 [node name="Floor" type="Polygon2D" parent="."]
@@ -59,47 +64,41 @@ position = Vector2(560, 270)
 [node name="EnemyMechanicalRat" parent="Enemies" groups=["enemies"] instance=ExtResource("5_rat")]
 position = Vector2(980, 460)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+unique_name_in_owner = true
 
-[node name="HUDPanel" type="PanelContainer" parent="CanvasLayer"]
+[node name="RunHintLayer" type="CanvasLayer" parent="."]
+
+[node name="HintPanel" type="PanelContainer" parent="RunHintLayer"]
 offset_left = 16.0
-offset_top = 16.0
-offset_right = 448.0
+offset_top = 92.0
+offset_right = 506.0
 offset_bottom = 154.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUDPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="RunHintLayer/HintPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUDPanel/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="TitleLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Milestone 2 - Combat test"
-
-[node name="HealthLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Health: 5 / 5"
-
-[node name="CurrencyLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Run gears: 0"
-
-[node name="HintLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
+[node name="HintLabel" type="Label" parent="RunHintLayer/HintPanel/MarginContainer"]
 layout_mode = 2
 text = "Attack automatons/rats. Red zone: damage. Drops add run gears."
 
-[node name="ReturnHubButton" type="Button" parent="CanvasLayer"]
+[node name="ReturnHubButton" type="Button" parent="RunHintLayer"]
 unique_name_in_owner = true
 offset_left = 16.0
 offset_top = 170.0
 offset_right = 160.0
 offset_bottom = 202.0
 text = "Return to Hub"
+
+[node name="SpecialIndicator" parent="." instance=ExtResource("9_special")]
+unique_name_in_owner = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pause")]
+unique_name_in_owner = true
+
+[node name="InventoryMenu" parent="." instance=ExtResource("8_inventory")]
+unique_name_in_owner = true
