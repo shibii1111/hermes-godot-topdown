@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://roguewatch_room_01"]
+[gd_scene load_steps=11 format=3 uid="uid://roguewatch_room_01"]
 
 [ext_resource type="Script" path="res://scripts/dungeon/dungeon_room.gd" id="1_room"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemyAutomaton.tscn" id="2_automaton"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemyMechanicalRat.tscn" id="3_rat"]
 [ext_resource type="Script" path="res://scripts/dungeon/dungeon_portal.gd" id="4_portal"]
+[ext_resource type="Texture2D" path="res://assets/pixel/dungeon/portal_horizontal.png" id="5_portal_horizontal"]
+[ext_resource type="Texture2D" path="res://assets/pixel/dungeon/portal_vertical.png" id="6_portal_vertical"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_north_portal"]
 size = Vector2(220, 90)
@@ -46,9 +48,8 @@ collision_mask = 1
 script = ExtResource("4_portal")
 direction = "north"
 
-[node name="Visual" type="Polygon2D" parent="NorthPortal"]
-color = Color(0.36, 0.75, 0.92, 0.55)
-polygon = PackedVector2Array(-90, -28, 90, -28, 110, 0, 90, 28, -90, 28, -110, 0)
+[node name="Visual" type="Sprite2D" parent="NorthPortal"]
+texture = ExtResource("5_portal_horizontal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NorthPortal"]
 shape = SubResource("RectangleShape2D_north_portal")
@@ -61,9 +62,8 @@ collision_mask = 1
 script = ExtResource("4_portal")
 direction = "south"
 
-[node name="Visual" type="Polygon2D" parent="SouthPortal"]
-color = Color(0.36, 0.75, 0.92, 0.55)
-polygon = PackedVector2Array(-90, -28, 90, -28, 110, 0, 90, 28, -90, 28, -110, 0)
+[node name="Visual" type="Sprite2D" parent="SouthPortal"]
+texture = ExtResource("5_portal_horizontal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SouthPortal"]
 shape = SubResource("RectangleShape2D_south_portal")
@@ -76,9 +76,8 @@ collision_mask = 1
 script = ExtResource("4_portal")
 direction = "east"
 
-[node name="Visual" type="Polygon2D" parent="EastPortal"]
-color = Color(0.36, 0.75, 0.92, 0.55)
-polygon = PackedVector2Array(-28, -90, 28, -90, 52, 0, 28, 90, -28, 90, -52, 0)
+[node name="Visual" type="Sprite2D" parent="EastPortal"]
+texture = ExtResource("6_portal_vertical")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EastPortal"]
 shape = SubResource("RectangleShape2D_east_portal")
@@ -91,9 +90,8 @@ collision_mask = 1
 script = ExtResource("4_portal")
 direction = "west"
 
-[node name="Visual" type="Polygon2D" parent="WestPortal"]
-color = Color(0.36, 0.75, 0.92, 0.55)
-polygon = PackedVector2Array(-28, -90, 28, -90, 52, 0, 28, 90, -28, 90, -52, 0)
+[node name="Visual" type="Sprite2D" parent="WestPortal"]
+texture = ExtResource("6_portal_vertical")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WestPortal"]
 shape = SubResource("RectangleShape2D_west_portal")

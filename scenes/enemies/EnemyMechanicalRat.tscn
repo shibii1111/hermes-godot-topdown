@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://roguewatch_enemy_mechanical_rat"]
+[gd_scene load_steps=12 format=3 uid="uid://roguewatch_enemy_mechanical_rat"]
 
 [ext_resource type="Script" path="res://scripts/enemies/enemy_mechanical_rat.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/enemy_ai_patrol.gd" id="4_patrol"]
 [ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_hurtbox"]
 [ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/pixel/enemies/mechanical_rat.png" id="7_rat_sprite"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 10.0
@@ -24,14 +25,9 @@ move_speed = 125.0
 contact_damage = 1
 drop_currency = 1
 
-[node name="BodyVisual" type="Polygon2D" parent="."]
+[node name="BodyVisual" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-color = Color(0.36, 0.36, 0.34, 1)
-polygon = PackedVector2Array(-14, -7, 6, -10, 16, 0, 6, 10, -14, 7)
-
-[node name="GearVisual" type="Polygon2D" parent="."]
-color = Color(0.7, 0.52, 0.22, 1)
-polygon = PackedVector2Array(-3, -7, 3, -7, 7, -3, 7, 3, 3, 7, -3, 7, -7, 3, -7, -3)
+texture = ExtResource("7_rat_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("body_shape")

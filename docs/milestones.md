@@ -64,10 +64,11 @@ Status: foundation implemented.
 - Cardinal door buttons connect generated room neighbors.
 - Hub run portal now starts the generated dungeon root.
 
-## Milestone 6: RPG Systems
+## Milestone 6: RPG Systems and Progressive Art
 
 Goal:
 
+- M6.0: Pixel art pipeline and first sprite replacement.
 - XP/level up.
 - Stats.
 - Loot.
@@ -76,11 +77,17 @@ Goal:
 - Merchant/NPC.
 - Simple quests.
 
+Art integration rule:
+
+- Do not defer all real sprites to the final polish pass.
+- Add or replace the relevant original 32x32 pixel art alongside each gameplay slice.
+- Keep collisions and gameplay data independent from sprite visuals.
+
 ## Milestone 7: Polish prototype
 
 Goal:
 
-- Coherent 32x32 assets.
+- Improve and complete coherent 32x32 assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.
 - Minimal balancing.

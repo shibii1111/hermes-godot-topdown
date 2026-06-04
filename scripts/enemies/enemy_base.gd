@@ -14,17 +14,17 @@ signal died(enemy: Node, currency_value: int)
 @onready var health_component: Node = %HealthComponent
 @onready var chase_ai: Node = %EnemyAIChase
 @onready var patrol_ai: Node = %EnemyAIPatrol
-@onready var body_visual: Polygon2D = %BodyVisual
+@onready var body_visual: CanvasItem = %BodyVisual
 @onready var contact_hitbox: Node = %ContactHitbox
 
 var target: Node2D = null
 var _flash_remaining: float = 0.0
-var _base_color: Color = Color.WHITE
+var _base_modulate: Color = Color.WHITE
 
 
 ## Configures signals and initial enemy values.
 func _ready() -> void:
-	_base_color = body_visual.color
+	_base_modulate = body_visual.modulate
 	health_component.damaged.connect(_on_damaged)
 	health_component.died.connect(_on_died)
 	contact_hitbox.damage_amount = contact_damage
@@ -60,7 +60,7 @@ func _choose_move_direction(delta: float) -> Vector2:
 ## Starts a visual flash when the enemy is hit.
 func _on_damaged(_amount: int) -> void:
 	_flash_remaining = hit_flash_time
-	body_visual.color = Color(1.0, 0.92, 0.72, 1.0)
+	body_visual.modulate = Color(1.0, 0.92, 0.72, 1.0)
 
 
 ## Restores the base color after the hit flash.
@@ -69,7 +69,7 @@ func _update_hit_flash(delta: float) -> void:
 		return
 	_flash_remaining = maxf(0.0, _flash_remaining - delta)
 	if _flash_remaining == 0.0:
-		body_visual.color = _base_color
+		body_visual.modulate = _base_modulate
 
 
 ## Emits the drop, then removes the enemy from the scene.

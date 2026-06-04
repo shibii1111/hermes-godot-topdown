@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://roguewatch_enemy_automaton"]
+[gd_scene load_steps=12 format=3 uid="uid://roguewatch_enemy_automaton"]
 
 [ext_resource type="Script" path="res://scripts/enemies/enemy_automaton.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/enemy_ai_patrol.gd" id="4_patrol"]
 [ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_hurtbox"]
 [ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/pixel/enemies/clockwork_automaton.png" id="7_automaton_sprite"]
 
 [sub_resource type="CircleShape2D" id="body_shape"]
 radius = 14.0
@@ -24,14 +25,9 @@ move_speed = 72.0
 contact_damage = 1
 drop_currency = 2
 
-[node name="BodyVisual" type="Polygon2D" parent="."]
+[node name="BodyVisual" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-color = Color(0.48, 0.34, 0.18, 1)
-polygon = PackedVector2Array(-13, -16, 13, -16, 16, 14, -16, 14)
-
-[node name="GearVisual" type="Polygon2D" parent="."]
-color = Color(0.86, 0.67, 0.28, 1)
-polygon = PackedVector2Array(0, -10, 4, -4, 10, 0, 4, 4, 0, 10, -4, 4, -10, 0, -4, -4)
+texture = ExtResource("7_automaton_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("body_shape")

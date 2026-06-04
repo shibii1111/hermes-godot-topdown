@@ -9,12 +9,12 @@ signal portal_entered(direction: String)
 @export_enum("north", "south", "east", "west") var direction: String = "north"
 
 var enabled_for_room: bool = false
-var visual: Polygon2D = null
+var visual: CanvasItem = null
 
 
 ## Connects body detection once when the portal enters the scene tree.
 func _ready() -> void:
-	visual = get_node_or_null("Visual") as Polygon2D
+	visual = get_node_or_null("Visual") as CanvasItem
 	body_entered.connect(_on_body_entered)
 	set_enabled_for_room(enabled_for_room)
 

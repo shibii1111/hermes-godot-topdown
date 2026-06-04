@@ -42,4 +42,5 @@ godot --path .
 - `docs/architecture.md`: proposed technical organization.
 - `docs/controls.md`: keyboard/mouse and Xbox controller mapping.
 - `docs/milestones.md`: progressive prototype breakdown.
+- `docs/art_direction.md`: pixel art direction, scale, palette, and progressive integration rules.
 - `assets/pixel/README.md`: pixel art asset plan and licensing rules.
