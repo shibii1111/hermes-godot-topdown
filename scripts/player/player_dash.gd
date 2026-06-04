@@ -1,8 +1,8 @@
 extends Node
 class_name PlayerDash
 
-## Gère la fenêtre active et le cooldown du dash.
-## Le déplacement reste calculé ailleurs pour garder les responsabilités séparées.
+## Manages the dash active window and cooldown.
+## Movement remains calculated elsewhere to keep responsibilities separate.
 
 @export var dash_speed: float = 430.0
 @export var dash_duration: float = 0.14
@@ -13,7 +13,7 @@ var _cooldown_remaining: float = 0.0
 var _dash_direction: Vector2 = Vector2.ZERO
 
 
-## Met à jour timers et démarre un dash si le joueur le demande et que le cooldown est prêt.
+## Updates timers and starts a dash if the player requests it and cooldown is ready.
 func update_dash(delta: float, wants_dash: bool, facing_direction: Vector2) -> void:
 	_active_time_remaining = maxf(0.0, _active_time_remaining - delta)
 	_cooldown_remaining = maxf(0.0, _cooldown_remaining - delta)
@@ -26,13 +26,13 @@ func update_dash(delta: float, wants_dash: bool, facing_direction: Vector2) -> v
 		_cooldown_remaining = dash_cooldown
 
 
-## Retourne la vitesse de dash quand il est actif, sinon zéro.
+## Returns dash velocity when active, otherwise zero.
 func get_dash_velocity() -> Vector2:
 	if not is_dashing():
 		return Vector2.ZERO
 	return _dash_direction * dash_speed
 
 
-## Indique si le dash est actuellement dans sa fenêtre active.
+## Indicates whether the dash is currently inside its active window.
 func is_dashing() -> bool:
 	return _active_time_remaining > 0.0

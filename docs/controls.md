@@ -1,35 +1,35 @@
 # RogueWatch Controls
 
-## Direction d'attaque
+## Attack Direction
 
-RogueWatch n'est pas un twin-stick shooter. La direction d'attaque vient de la direction où le personnage regarde.
+RogueWatch is not a twin-stick shooter. Attack direction comes from the direction the character is facing.
 
-## Clavier / souris
+## Keyboard / Mouse
 
-- Mouvement: WASD ou flèches.
-- Attaque melee: clic gauche ou Space.
+- Movement: WASD or arrow keys.
+- Melee attack: left click or Space.
 - Dash: Shift.
 - Pause: Escape.
-- Inventaire: I.
+- Inventory: I.
 - Interact: E.
-- Spell / special: Q ou clic droit.
+- Spell / special: Q or right click.
 
-## Manette Xbox
+## Xbox Controller
 
-Mapping approuvé: option A.
+Approved mapping: option A.
 
-- Left stick / D-pad: mouvement.
-- A: attaque melee en combat/run.
-- A: interaction contextuelle hors combat.
+- Left stick / D-pad: movement.
+- A: melee attack in combat/run.
+- A: contextual interaction outside combat.
 - B: dash.
 - Start: pause.
-- Y: inventaire.
-- X: spell ou special attack.
+- Y: inventory.
+- X: spell or special attack.
 
-## Note d'implémentation
+## Implementation Note
 
-Comme A sert à la fois à l'attaque et à l'interaction contextuelle, le code devra résoudre le contexte proprement:
+Because A is used for both attack and contextual interaction, the code must resolve context cleanly:
 
-- Si le joueur est en dialogue/menu/hub interactif: A déclenche `interact` ou `confirm`.
-- Si le joueur est en run/combat actif: A déclenche `attack`.
-- Le système d'input ne doit pas viser avec le stick droit.
+- If the player is in dialogue/menu/interactive hub context: A triggers `interact` or `confirm`.
+- If the player is in an active run/combat context: A triggers `attack`.
+- The input system must not aim with the right stick.

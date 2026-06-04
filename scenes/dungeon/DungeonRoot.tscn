@@ -32,15 +32,15 @@ theme_override_constants/separation = 16
 
 [node name="Title" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Run prototype - Donjon mécanique"
+text = "Run Prototype - Mechanical Dungeon"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Fondation temporaire: génération procédurale, rooms et combat seront ajoutés après validation."
+text = "Temporary foundation: procedural generation, rooms, and combat will be added after validation."
 horizontal_alignment = 1
 
 [node name="ReturnHubButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Retour au hub"
+text = "Return to Hub"

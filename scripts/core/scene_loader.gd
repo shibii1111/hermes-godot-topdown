@@ -1,7 +1,7 @@
 extends Node
 
-## Charge les scènes principales dans le conteneur du GameRoot.
-## L'autoload reste mince: il ne décide pas du gameplay, il effectue seulement les transitions.
+## Loads main scenes into the GameRoot container.
+## The autoload stays thin: it does not decide gameplay, it only performs transitions.
 
 const START_MENU_SCENE := "res://scenes/menus/StartMenu.tscn"
 const HUB_SCENE := "res://scenes/hub/Hub.tscn"
@@ -11,20 +11,20 @@ var _scene_container: Node = null
 var _current_scene: Node = null
 
 
-## Enregistre le conteneur où les scènes de jeu seront instanciées.
+## Registers the container where game scenes will be instantiated.
 func register_scene_container(container: Node) -> void:
 	_scene_container = container
 
 
-## Charge une scène par chemin Godot et remplace proprement la scène active.
+## Loads a scene by Godot path and cleanly replaces the active scene.
 func change_scene(scene_path: String) -> void:
 	if _scene_container == null:
-		push_error("SceneLoader: aucun conteneur de scène enregistré.")
+		push_error("SceneLoader: no scene container registered.")
 		return
 
 	var packed_scene := load(scene_path) as PackedScene
 	if packed_scene == null:
-		push_error("SceneLoader: scène introuvable: %s" % scene_path)
+		push_error("SceneLoader: scene not found: %s" % scene_path)
 		return
 
 	if _current_scene != null:
@@ -35,19 +35,19 @@ func change_scene(scene_path: String) -> void:
 	SignalBus.scene_changed.emit(scene_path)
 
 
-## Affiche le menu de démarrage et met à jour l'état global.
+## Shows the start menu and updates global state.
 func go_to_start_menu() -> void:
 	GameState.set_mode(GameState.Mode.START_MENU)
 	change_scene(START_MENU_SCENE)
 
 
-## Affiche le hub central et met à jour l'état global.
+## Shows the central hub and updates global state.
 func go_to_hub() -> void:
 	GameState.set_mode(GameState.Mode.HUB)
 	change_scene(HUB_SCENE)
 
 
-## Affiche la scène de donjon prototype et déclenche le signal de run.
+## Shows the prototype dungeon scene and emits the run-start signal.
 func start_run() -> void:
 	GameState.set_mode(GameState.Mode.RUN)
 	change_scene(DUNGEON_SCENE)

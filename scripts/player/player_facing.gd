@@ -1,22 +1,22 @@
 extends Node
 class_name PlayerFacing
 
-## Suit la direction où le personnage regarde.
-## Les attaques utilisent cette direction plutôt que le stick droit pour éviter le feeling twin-stick.
+## Tracks the direction the character is facing.
+## Attacks use this direction instead of the right stick to avoid a twin-stick feel.
 
 const DEFAULT_FACING := Vector2.DOWN
 
 var facing_direction: Vector2 = DEFAULT_FACING
 
 
-## Met à jour la direction seulement quand le joueur fournit un mouvement significatif.
+## Updates direction only when the player provides meaningful movement.
 func update_facing(move_vector: Vector2) -> void:
 	if move_vector.length_squared() < 0.01:
 		return
 	facing_direction = move_vector.normalized()
 
 
-## Retourne la direction cardinale la plus proche, utile pour animations 4 directions.
+## Returns the nearest cardinal direction, useful for 4-direction animations.
 func get_cardinal_facing() -> Vector2:
 	if absf(facing_direction.x) > absf(facing_direction.y):
 		return Vector2.RIGHT if facing_direction.x > 0.0 else Vector2.LEFT

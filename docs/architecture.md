@@ -1,45 +1,45 @@
 # RogueWatch Architecture
 
-## Principes
+## Principles
 
-- GDScript seulement.
-- Petits scripts spécialisés par domaine.
-- Composants réutilisables pour health, hitbox, hurtbox, stats, inventory et progression.
-- UI séparée de la logique gameplay.
-- Progression de run séparée de la progression permanente.
-- Génération de donjon séparée des scènes concrètes de rooms.
+- GDScript only.
+- Small domain-specific scripts.
+- Reusable components for health, hitbox, hurtbox, stats, inventory, and progression.
+- UI separated from gameplay logic.
+- Run progression separated from permanent progression.
+- Dungeon generation separated from concrete room scenes.
 
-## Dossiers principaux
+## Main Folders
 
-- `assets/`: assets originaux du prototype, notamment pixel art 32x32.
-- `scenes/`: scènes Godot réutilisables.
-- `scripts/`: scripts GDScript organisés par domaine.
-- `resources/`: données Godot `.tres` pour items, weapons, upgrades, rooms et loot tables.
-- `docs/`: documentation interne du projet.
+- `assets/`: original prototype assets, including 32x32 pixel art.
+- `scenes/`: reusable Godot scenes.
+- `scripts/`: GDScript files organized by domain.
+- `resources/`: Godot `.tres` data for items, weapons, upgrades, rooms, and loot tables.
+- `docs/`: internal project documentation.
 
-## Autoloads approuvés
+## Approved Autoloads
 
-- `GameState`: état global start menu, hub, run et pause.
-- `SceneLoader`: transitions de scènes principales.
-- `SaveManager`: progression permanente et sauvegarde.
-- `SignalBus`: signaux globaux limités pour réduire le couplage.
+- `GameState`: global state for start menu, hub, run, and pause.
+- `SceneLoader`: main scene transitions.
+- `SaveManager`: permanent progression and saving.
+- `SignalBus`: limited global signals to reduce coupling.
 
-## Flow cible
+## Target Flow
 
 ```text
-Start menu -> Hub -> Run/dungeon -> mort ou sortie -> Hub -> upgrades permanents -> nouvelle run
+Start menu -> Hub -> Run/dungeon -> death or exit -> Hub -> permanent upgrades -> new run
 ```
 
-## Séparation des systèmes
+## System Separation
 
-- `player`: contrôle, movement, facing, dash, combat joueur.
-- `combat`: dégâts, health, hitboxes, hurtboxes, armes melee.
-- `enemies`: base enemy, IA et ennemis clockpunk concrets.
-- `dungeon`: génération, layout, rooms et gestion de run.
-- `inventory`: slots, équipement et stacks.
-- `items`: définitions, loot, pickups et chests.
+- `player`: input control, movement, facing, dash, player combat.
+- `combat`: damage, health, hitboxes, hurtboxes, melee weapons.
+- `enemies`: enemy base, AI, and concrete clockpunk enemies.
+- `dungeon`: generation, layout, rooms, and run management.
+- `inventory`: slots, equipment, and stacks.
+- `items`: definitions, loot, pickups, and chests.
 - `progression`: XP, levels, stats, run progression, permanent progression.
-- `npcs`: marchand, station d'upgrade, donneur de quête.
-- `quests`: définitions et état de quêtes simples.
-- `saves`: save data et save manager.
-- `ui`: HUD, menus et dialogues.
+- `npcs`: merchant, upgrade station, quest giver.
+- `quests`: simple quest definitions and state.
+- `saves`: save data and save manager.
+- `ui`: HUD, menus, and dialogues.

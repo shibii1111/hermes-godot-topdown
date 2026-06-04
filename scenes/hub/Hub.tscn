@@ -32,20 +32,20 @@ theme_override_constants/separation = 16
 
 [node name="Title" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Hub central - Atelier de l'Horloger"
+text = "Central Hub - Clockmaker's Workshop"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Fondation temporaire: upgrades, NPCs et portail seront ajoutés dans les prochains milestones."
+text = "Temporary foundation: upgrades, NPCs, and portal will be added in upcoming milestones."
 horizontal_alignment = 1
 
 [node name="StartRunButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Lancer une run"
+text = "Start Run"
 
 [node name="MenuButton" type="Button" parent="CanvasLayer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Retour menu"
+text = "Back to Menu"

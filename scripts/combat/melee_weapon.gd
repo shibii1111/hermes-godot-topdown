@@ -1,8 +1,8 @@
 extends "res://scripts/combat/hitbox.gd"
 class_name MeleeWeapon
 
-## Hitbox spécialisée pour une arme melee placée devant le joueur.
-## Elle reste active pendant une courte fenêtre puis se désactive automatiquement.
+## Specialized hitbox for a melee weapon placed in front of the player.
+## It stays active for a short window, then disables itself automatically.
 
 @export var reach: float = 34.0
 @export var active_duration: float = 0.12
@@ -10,7 +10,7 @@ class_name MeleeWeapon
 var _active_time_remaining: float = 0.0
 
 
-## Met à jour la durée active de l'arme et coupe la hitbox à la fin du swing.
+## Updates the weapon's active duration and disables the hitbox at the end of the swing.
 func _physics_process(delta: float) -> void:
 	if _active_time_remaining <= 0.0:
 		return
@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		deactivate()
 
 
-## Place l'arme devant le joueur et active la hitbox de slash.
+## Places the weapon in front of the player and activates the slash hitbox.
 func swing(runtime_source: Node, direction: Vector2) -> void:
 	var attack_direction := direction.normalized()
 	if attack_direction == Vector2.ZERO:

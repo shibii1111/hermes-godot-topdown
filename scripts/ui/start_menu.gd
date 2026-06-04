@@ -1,24 +1,24 @@
 extends Control
 
-## Menu de démarrage minimal mais fonctionnel.
-## Il lance le hub, point d'entrée prévu de la boucle roguelite.
+## Minimal but functional start menu.
+## It launches the hub, the planned entry point for the roguelite loop.
 
 @onready var start_button: Button = %StartButton
 @onready var quit_button: Button = %QuitButton
 
 
-## Connecte les boutons et place le focus pour le support manette/clavier.
+## Connects buttons and sets focus for controller/keyboard support.
 func _ready() -> void:
 	start_button.pressed.connect(_on_start_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	start_button.grab_focus()
 
 
-## Lance le hub central depuis le menu de démarrage.
+## Launches the central hub from the start menu.
 func _on_start_pressed() -> void:
 	SceneLoader.go_to_hub()
 
 
-## Quitte le prototype proprement.
+## Quits the prototype cleanly.
 func _on_quit_pressed() -> void:
 	get_tree().quit()

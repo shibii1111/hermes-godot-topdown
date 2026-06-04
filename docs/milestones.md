@@ -1,86 +1,86 @@
 # RogueWatch Milestones
 
-## Milestone 0: Inspection et architecture
+## Milestone 0: Inspection and Architecture
 
-Statut: complété.
+Status: completed.
 
-- Repo inspecté.
-- Repo initialement vide sauf `.gitignore`.
-- Architecture proposée et approuvée.
-- Autoloads approuvés.
-- Contrôles manette option A approuvés.
+- Repository inspected.
+- Repository initially empty except for `.gitignore`.
+- Architecture proposed and approved.
+- Autoloads approved.
+- Controller mapping option A approved.
 
-## Milestone 1: Fondation jouable
+## Milestone 1: Playable Foundation
 
-Statut: fondation implémentée.
+Status: foundation implemented.
 
-- Player movement top-down.
-- Direction facing.
-- Attaque melee devant le joueur.
+- Top-down player movement.
+- Facing direction.
+- Melee attack in front of the player.
 - Dash.
-- Health/damage vérifiable via zone de dégâts de test.
-- Salle de test jouable.
-- Input clavier/manette Xbox.
+- Health/damage verified through a test damage zone.
+- Playable test room.
+- Keyboard and Xbox controller input.
 
-## Milestone 2: Combat et ennemis
+## Milestone 2: Combat and Enemies
 
-Statut: fondation implémentée.
+Status: foundation implemented.
 
 - Enemy base class.
-- 2 ennemis clockpunk: automate et rat mécanique.
-- IA simple chase/patrol.
+- 2 clockpunk enemies: automaton and mechanical rat.
+- Simple chase/patrol AI.
 - Hitboxes/hurtboxes.
-- Feedback visuel de hit/death minimal.
-- Drops simples de currency de run.
+- Minimal hit/death visual feedback.
+- Simple run currency drops.
 
-## Milestone 3: UI et menus
+## Milestone 3: UI and Menus
 
-Objectif:
+Goal:
 
 - Start menu.
 - Pause menu via Start.
 - HUD health/currency/XP.
 - Inventory via Y.
-- Special/spell via X avec base extensible.
+- Special/spell via X with an extensible foundation.
 
 ## Milestone 4: Hub
 
-Objectif:
+Goal:
 
-- Hub central.
-- NPC ou station d'upgrade.
-- Currency permanente.
-- Unlock/amélioration de skills/weapons.
-- Sauvegarde de progression permanente.
+- Central Hub.
+- NPC or upgrade station.
+- Permanent currency.
+- Skill/weapon unlocks and upgrades.
+- Permanent progression saving.
 
-## Milestone 5: Donjons procéduraux
+## Milestone 5: Procedural Dungeons
 
-Objectif:
+Goal:
 
-- Génération procédurale fiable.
-- Assemblage de rooms/maps.
-- Au moins 10 maps/rooms utilisables.
-- Entrée depuis le hub.
-- Retour au hub à la mort.
+- Reliable procedural generation.
+- Room/map assembly.
+- At least 10 usable maps/rooms.
+- Entry from the hub.
+- Return to the hub on death.
 
-## Milestone 6: RPG systems
+## Milestone 6: RPG Systems
 
-Objectif:
+Goal:
 
 - XP/level up.
 - Stats.
 - Loot.
-- Équipement.
+- Equipment.
 - Skills/spells.
-- Marchand/NPC.
-- Quêtes simples.
+- Merchant/NPC.
+- Simple quests.
 
 ## Milestone 7: Polish prototype
 
-Objectif:
+Goal:
 
-- Assets 32x32 cohérents.
-- Animations de base.
-- Effets visuels.
-- Équilibrage minimal.
-- Flow complet: start menu -> hub -> run -> combat/loot/currency -> death -> hub -> permanent upgrade -> nouvelle run.
+- Coherent 32x32 assets.
+- Basic animations.
+- Visual effects.
+- Minimal balancing.
+- Complete flow: start menu -> hub -> run -> combat/loot/currency -> death -> hub -> permanent upgrade -> new run.

@@ -1,17 +1,17 @@
 extends Area2D
 class_name Hurtbox
 
-## Zone qui reçoit des dégâts et les redirige vers un HealthComponent.
-## Elle permet à un objet de recevoir des hits sans exposer toute sa scène.
+## Area that receives damage and redirects it to a HealthComponent.
+## It allows an object to receive hits without exposing its whole scene.
 
 @export var health_component_path: NodePath
 
 @onready var health_component: Node = get_node_or_null(health_component_path)
 
 
-## Transmet les dégâts reçus au composant de vie configuré.
+## Forwards received damage to the configured health component.
 func receive_damage(damage_data: Resource) -> void:
 	if health_component == null:
-		push_warning("Hurtbox sans HealthComponent: %s" % name)
+		push_warning("Hurtbox without HealthComponent: %s" % name)
 		return
 	health_component.apply_damage(damage_data)

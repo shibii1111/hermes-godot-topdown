@@ -1,12 +1,12 @@
 extends Node
 
-## Racine persistante du jeu.
-## Elle fournit un conteneur stable au SceneLoader pour remplacer menu, hub et donjon.
+## Persistent game root.
+## It provides SceneLoader with a stable container for replacing menu, hub, and dungeon scenes.
 
 @onready var scene_container: Node = $SceneContainer
 
 
-## Connecte la racine au SceneLoader puis affiche le start menu initial.
+## Connects the root to SceneLoader, then shows the initial start menu.
 func _ready() -> void:
 	SceneLoader.register_scene_container(scene_container)
 	SceneLoader.go_to_start_menu()

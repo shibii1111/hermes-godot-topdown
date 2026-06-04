@@ -1,35 +1,35 @@
 # RogueWatch
 
-RogueWatch est un prototype de roguelike/roguelite 2D top-down action RPG dans Godot 4.6.
+RogueWatch is a 2D top-down action RPG roguelike/roguelite prototype built in Godot 4.6.
 
 ## Vision
 
-- Combat temps réel inspiré Zelda: attaque avec un bouton, pas de combat au tour par tour.
-- Univers clockpunk: engrenages, horlogerie, automates, cuivre/laiton, ateliers et donjons mécaniques.
-- Cible PC seulement.
-- GDScript seulement.
-- Architecture modulaire, orientée objet, sans fichiers monolithiques.
+- Zelda-inspired real-time combat: one-button attacks, no turn-based combat.
+- Clockpunk setting: gears, clockwork, automatons, copper/brass, workshops, and mechanical dungeons.
+- PC-only target.
+- GDScript only.
+- Modular object-oriented architecture without monolithic files.
 
-## État actuel
+## Current Status
 
-Fondation initiale:
+Initial foundation:
 
-- Projet Godot 4.6.3 créé.
-- Start menu minimal fonctionnel.
-- Hub placeholder fonctionnel.
-- Donjon placeholder fonctionnel.
-- Autoloads limités: `GameState`, `SceneLoader`, `SaveManager`, `SignalBus`.
-- Input map clavier/souris et manette Xbox préparé.
+- Godot 4.6.3 project created.
+- Minimal functional start menu.
+- Functional hub placeholder.
+- Functional dungeon placeholder.
+- Limited autoloads: `GameState`, `SceneLoader`, `SaveManager`, `SignalBus`.
+- Keyboard/mouse and Xbox controller input map prepared.
 
-## Vérification
+## Verification
 
-Depuis la racine du repo:
+From the repository root:
 
 ```bash
 godot --headless --path . --quit
 ```
 
-Pour lancer l'éditeur:
+To launch the editor:
 
 ```bash
 godot --path .
@@ -37,6 +37,6 @@ godot --path .
 
 ## Documentation
 
-- `docs/architecture.md`: organisation technique proposée.
-- `docs/controls.md`: contrôles clavier/souris et manette Xbox.
-- `docs/milestones.md`: découpage progressif du prototype.
+- `docs/architecture.md`: proposed technical organization.
+- `docs/controls.md`: keyboard/mouse and Xbox controller mapping.
+- `docs/milestones.md`: progressive prototype breakdown.

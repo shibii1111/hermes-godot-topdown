@@ -1,18 +1,18 @@
 extends Node2D
 
-## Racine temporaire du donjon prototype.
-## Elle existe pour valider le flow start menu -> hub -> run avant d'implémenter la génération procédurale.
+## Temporary root for the prototype dungeon.
+## It exists to validate the start menu -> hub -> run flow before procedural generation is implemented.
 
 @onready var hub_button: Button = %ReturnHubButton
 
 
-## Connecte le bouton de retour hub utilisé pendant la fondation.
+## Connects the return-to-hub button used during the foundation phase.
 func _ready() -> void:
 	hub_button.pressed.connect(_on_return_hub_pressed)
 	hub_button.grab_focus()
 
 
-## Termine la run prototype et renvoie le joueur au hub.
+## Ends the prototype run and sends the player back to the hub.
 func _on_return_hub_pressed() -> void:
 	SignalBus.run_ended.emit("manual_return")
 	SceneLoader.go_to_hub()

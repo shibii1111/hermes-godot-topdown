@@ -3,8 +3,8 @@ class_name Hitbox
 
 const DamageDataScript := preload("res://scripts/combat/damage_data.gd")
 
-## Zone qui inflige des dégâts à des hurtboxes.
-## Elle garde une liste de cibles déjà touchées pendant une activation pour éviter les multi-hits accidentels.
+## Area that deals damage to hurtboxes.
+## It tracks targets already hit during one activation to avoid accidental multi-hits.
 
 @export var damage_amount: int = 1
 
@@ -13,13 +13,13 @@ var hit_direction: Vector2 = Vector2.DOWN
 var _already_hit: Array[Node] = []
 
 
-## Prépare les connexions Area2D et désactive la hitbox par défaut.
+## Prepares Area2D connections and disables the hitbox by default.
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	monitoring = false
 
 
-## Active la hitbox pour une attaque unique.
+## Activates the hitbox for a single attack.
 func activate(runtime_source: Node, direction: Vector2) -> void:
 	source = runtime_source
 	hit_direction = direction.normalized()
@@ -27,13 +27,13 @@ func activate(runtime_source: Node, direction: Vector2) -> void:
 	monitoring = true
 
 
-## Désactive la hitbox et oublie les cibles précédentes.
+## Disables the hitbox and clears previously hit targets.
 func deactivate() -> void:
 	monitoring = false
 	_already_hit.clear()
 
 
-## Applique les dégâts à une hurtbox compatible entrée dans la zone active.
+## Applies damage to a compatible hurtbox entering the active area.
 func _on_area_entered(area: Area2D) -> void:
 	if not monitoring or _already_hit.has(area):
 		return

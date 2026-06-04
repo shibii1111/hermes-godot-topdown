@@ -1,8 +1,8 @@
 extends Resource
 class_name EnemyStats
 
-## Données configurables d'un ennemi clockpunk.
-## Les scènes concrètes utilisent cette ressource pour éviter les valeurs magiques dans l'IA.
+## Configurable data for a clockpunk enemy.
+## Concrete scenes use this resource to avoid magic values in AI.
 
 @export var max_health: int = 3
 @export var move_speed: float = 90.0

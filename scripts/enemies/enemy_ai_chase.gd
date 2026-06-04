@@ -1,12 +1,12 @@
 extends Node
 class_name EnemyAIChase
 
-## IA simple de poursuite: si une cible est dans la portée d'aggro, retourner une direction vers elle.
+## Simple chase AI: if a target is within aggro range, returns a direction toward it.
 
 @export var aggro_range: float = 260.0
 
 
-## Calcule la direction de chase vers la cible, ou zéro si aucune cible valide/proche.
+## Computes the chase direction toward the target, or zero if no valid/nearby target exists.
 func get_chase_direction(owner_node: Node2D, target: Node2D) -> Vector2:
 	if owner_node == null or target == null:
 		return Vector2.ZERO

@@ -94,7 +94,7 @@ text = "Run gears: 0"
 
 [node name="HintLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Attaque les automates/rats. Zone rouge: dégâts. Les drops ajoutent des gears de run."
+text = "Attack automatons/rats. Red zone: damage. Drops add run gears."
 
 [node name="ReturnHubButton" type="Button" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -102,4 +102,4 @@ offset_left = 16.0
 offset_top = 170.0
 offset_right = 160.0
 offset_bottom = 202.0
-text = "Retour hub"
+text = "Return to Hub"

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
-## Scène joueur principale.
-## Elle assemble les composants spécialisés au lieu de contenir toute la logique dans un seul script.
+## Main player scene.
+## It assembles specialized components instead of containing all logic in one script.
 
 signal died()
 signal health_changed(current_health: int, max_health: int)
@@ -16,14 +16,14 @@ signal health_changed(current_health: int, max_health: int)
 @onready var direction_pointer: Node2D = %DirectionPointer
 
 
-## Connecte les signaux de santé du composant HealthComponent.
+## Connects health signals from the HealthComponent.
 func _ready() -> void:
 	health_component.health_changed.connect(_on_health_changed)
 	health_component.died.connect(_on_died)
 	combat.update_weapon_direction(facing.facing_direction)
 
 
-## Lit les intentions du joueur, met à jour les composants, puis applique le déplacement.
+## Reads player intentions, updates components, then applies movement.
 func _physics_process(delta: float) -> void:
 	var move_vector: Vector2 = controller.get_move_vector()
 	facing.update_facing(move_vector)
@@ -39,22 +39,22 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-## Point d'entrée public pour recevoir des dégâts depuis une zone de test ou un ennemi.
+## Public entry point for receiving damage from a test zone or enemy.
 func receive_damage(damage_data: Resource) -> void:
 	health_component.apply_damage(damage_data)
 
 
-## Oriente le petit indicateur visuel de facing devant le joueur.
+## Rotates the small facing visual indicator in front of the player.
 func _update_direction_pointer() -> void:
 	direction_pointer.position = facing.facing_direction.normalized() * 22.0
 	direction_pointer.rotation = facing.facing_direction.angle()
 
 
-## Remonte les changements de vie vers l'UI de la salle de test.
+## Forwards health changes to the test room UI.
 func _on_health_changed(current_health: int, max_health: int) -> void:
 	health_changed.emit(current_health, max_health)
 
 
-## Signale la mort du joueur au gestionnaire de scène courant.
+## Signals player death to the current scene manager.
 func _on_died() -> void:
 	died.emit()

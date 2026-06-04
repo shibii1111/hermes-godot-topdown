@@ -1,8 +1,8 @@
 extends CharacterBody2D
 class_name EnemyBase
 
-## Base commune des ennemis clockpunk.
-## Elle gère ciblage, mouvement IA simple, health/damage, dégâts au contact et drop minimal.
+## Common base for clockpunk enemies.
+## It handles targeting, simple AI movement, health/damage, contact damage, and minimal drops.
 
 signal died(enemy: Node, currency_value: int)
 
@@ -22,7 +22,7 @@ var _flash_remaining: float = 0.0
 var _base_color: Color = Color.WHITE
 
 
-## Configure les signaux et les valeurs initiales de l'ennemi.
+## Configures signals and initial enemy values.
 func _ready() -> void:
 	_base_color = body_visual.color
 	health_component.damaged.connect(_on_damaged)
@@ -31,7 +31,7 @@ func _ready() -> void:
 	contact_hitbox.activate(self, Vector2.ZERO)
 
 
-## Met à jour l'IA, le déplacement et le feedback visuel de hit.
+## Updates AI, movement, and hit visual feedback.
 func _physics_process(delta: float) -> void:
 	_update_hit_flash(delta)
 	var direction := _choose_move_direction(delta)
@@ -39,17 +39,17 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-## Définit la cible poursuivie par l'ennemi.
+## Sets the target chased by the enemy.
 func set_target(next_target: Node2D) -> void:
 	target = next_target
 
 
-## Point d'entrée pour recevoir des dégâts depuis une hitbox du joueur.
+## Entry point for receiving damage from a player hitbox.
 func receive_damage(damage_data: Resource) -> void:
 	health_component.apply_damage(damage_data)
 
 
-## Choisit chase si possible, sinon patrouille.
+## Chooses chase when possible, otherwise patrol.
 func _choose_move_direction(delta: float) -> Vector2:
 	var chase_direction: Vector2 = chase_ai.get_chase_direction(self, target)
 	if chase_direction != Vector2.ZERO:
@@ -57,13 +57,13 @@ func _choose_move_direction(delta: float) -> Vector2:
 	return patrol_ai.get_patrol_direction(delta)
 
 
-## Lance un flash visuel quand l'ennemi subit un hit.
+## Starts a visual flash when the enemy is hit.
 func _on_damaged(_amount: int) -> void:
 	_flash_remaining = hit_flash_time
 	body_visual.color = Color(1.0, 0.92, 0.72, 1.0)
 
 
-## Restaure la couleur de base après le flash de hit.
+## Restores the base color after the hit flash.
 func _update_hit_flash(delta: float) -> void:
 	if _flash_remaining <= 0.0:
 		return
@@ -72,7 +72,7 @@ func _update_hit_flash(delta: float) -> void:
 		body_visual.color = _base_color
 
 
-## Émet le drop puis retire l'ennemi de la scène.
+## Emits the drop, then removes the enemy from the scene.
 func _on_died() -> void:
 	died.emit(self, drop_currency)
 	queue_free()

@@ -1,7 +1,7 @@
 extends Node
 class_name EnemyAIPatrol
 
-## IA de patrouille lisible: marche dans une direction puis alterne après un délai.
+## Readable patrol AI: moves in one direction, then switches after a delay.
 
 @export var switch_interval: float = 1.25
 
@@ -10,7 +10,7 @@ var _direction_index: int = 0
 var _directions: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 
 
-## Retourne une direction de patrouille stable et cyclique.
+## Returns a stable cyclic patrol direction.
 func get_patrol_direction(delta: float) -> Vector2:
 	_time_remaining -= delta
 	if _time_remaining <= 0.0:

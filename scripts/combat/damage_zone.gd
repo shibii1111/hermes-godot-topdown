@@ -3,8 +3,8 @@ class_name DamageZone
 
 const DamageDataScript := preload("res://scripts/combat/damage_data.gd")
 
-## Zone de test qui inflige des dégâts périodiques au joueur.
-## Elle rend le système health/damage vérifiable dès Milestone 1 sans attendre les ennemis.
+## Test zone that periodically damages the player.
+## It makes the health/damage system verifiable from Milestone 1 without waiting for enemies.
 
 @export var damage_per_tick: int = 1
 @export var tick_interval: float = 0.75
@@ -13,14 +13,14 @@ var _bodies_in_zone: Array[Node] = []
 var _tick_remaining: float = 0.0
 
 
-## Connecte les signaux d'entrée/sortie et initialise le timer de dégâts.
+## Connects enter/exit signals and initializes the damage timer.
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_tick_remaining = tick_interval
 
 
-## Applique les dégâts périodiques aux bodies compatibles présents dans la zone.
+## Applies periodic damage to compatible bodies currently inside the area.
 func _physics_process(delta: float) -> void:
 	if _bodies_in_zone.is_empty():
 		_tick_remaining = tick_interval
@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 		_apply_damage_to(body)
 
 
-## Ajoute un body à la liste et applique un premier dégât immédiat.
+## Adds a body to the list and applies the first damage tick immediately.
 func _on_body_entered(body: Node) -> void:
 	if _bodies_in_zone.has(body):
 		return
@@ -41,12 +41,12 @@ func _on_body_entered(body: Node) -> void:
 	_apply_damage_to(body)
 
 
-## Retire un body sorti de la zone de dégâts.
+## Removes a body that left the damage zone.
 func _on_body_exited(body: Node) -> void:
 	_bodies_in_zone.erase(body)
 
 
-## Envoie un DamageData au body si celui-ci expose receive_damage().
+## Sends DamageData to the body if it exposes receive_damage().
 func _apply_damage_to(body: Node) -> void:
 	if not body.has_method("receive_damage"):
 		return
