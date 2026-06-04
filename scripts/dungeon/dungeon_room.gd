@@ -6,6 +6,21 @@ class_name DungeonRoom
 
 signal exit_requested(direction: String)
 
+const ROOM_CENTER := Vector2(960, 584)
+const PORTAL_SPAWN_OFFSET := 176.0
+const OPPOSITE_DIRECTIONS := {
+	"north": "south",
+	"south": "north",
+	"east": "west",
+	"west": "east"
+}
+const PORTAL_INWARD_OFFSETS := {
+	"north": Vector2(0, PORTAL_SPAWN_OFFSET),
+	"south": Vector2(0, -PORTAL_SPAWN_OFFSET),
+	"east": Vector2(-PORTAL_SPAWN_OFFSET, 0),
+	"west": Vector2(PORTAL_SPAWN_OFFSET, 0)
+}
+
 @export var room_title: String = "Clockwork Room"
 @export var room_variant: String = "combat"
 
@@ -39,9 +54,31 @@ func configure_room(room_record: Dictionary) -> void:
 	_update_portals()
 
 
-## Returns the safe player spawn point near the room center.
-func get_player_spawn_position(_entry_direction: String = "") -> Vector2:
-	return Vector2(960, 584)
+## Returns a safe player spawn point for the active room.
+## Fresh runs use the center, while portal entries spawn just inside the opposite portal.
+func get_player_spawn_position(entry_direction: String = "") -> Vector2:
+	if not OPPOSITE_DIRECTIONS.has(entry_direction):
+		return ROOM_CENTER
+	var opposite_direction := String(OPPOSITE_DIRECTIONS[entry_direction])
+	var portal := _portal_for_direction(opposite_direction)
+	if portal == null:
+		return ROOM_CENTER
+	return portal.global_position + PORTAL_INWARD_OFFSETS[opposite_direction]
+
+
+## Finds the portal node that matches a cardinal direction.
+func _portal_for_direction(portal_direction: String) -> Node2D:
+	match portal_direction:
+		"north":
+			return north_portal as Node2D
+		"south":
+			return south_portal as Node2D
+		"east":
+			return east_portal as Node2D
+		"west":
+			return west_portal as Node2D
+		_:
+			return null
 
 
 ## Updates visible text for the active room.

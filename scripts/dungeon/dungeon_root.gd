@@ -23,6 +23,7 @@ var run_currency: int = 0
 var run_xp: int = 0
 var run_level: int = 1
 var xp_required: int = 10
+var transition_in_progress: bool = false
 
 
 ## Starts a generated run and wires shared run UI.
@@ -63,14 +64,25 @@ func generate_dungeon(seed_value: int = 0) -> void:
 
 ## Moves to the neighbor room connected by the requested cardinal direction.
 func transition_to_neighbor(direction: String) -> void:
+	if transition_in_progress:
+		return
+	transition_in_progress = true
+	_complete_transition_to_neighbor.call_deferred(direction)
+
+
+## Completes a portal transition outside the Area2D body_entered physics callback.
+func _complete_transition_to_neighbor(direction: String) -> void:
 	if current_room_id == "" or not dungeon_graph.has("rooms"):
+		transition_in_progress = false
 		return
 	var room_record: Dictionary = dungeon_graph["rooms"][current_room_id]
 	var neighbors: Dictionary = room_record.get("neighbors", {})
 	if not neighbors.has(direction):
+		transition_in_progress = false
 		return
 	current_room_id = String(neighbors[direction])
 	_load_current_room(direction)
+	transition_in_progress = false
 
 
 ## Toggles the pause menu and global paused state for active runs.

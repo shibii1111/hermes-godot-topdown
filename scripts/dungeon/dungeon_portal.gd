@@ -22,8 +22,8 @@ func _ready() -> void:
 ## Enables or disables this portal based on the generated room graph.
 func set_enabled_for_room(is_enabled: bool) -> void:
 	enabled_for_room = is_enabled
-	monitoring = is_enabled
-	monitorable = is_enabled
+	set_deferred("monitoring", is_enabled)
+	set_deferred("monitorable", is_enabled)
 	visible = is_enabled
 	if visual != null:
 		visual.visible = is_enabled
