@@ -27,6 +27,7 @@ drop_currency = 2
 
 [node name="BodyVisual" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+scale = Vector2(0.48, 0.48)
 texture = ExtResource("7_automaton_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

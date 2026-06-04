@@ -28,6 +28,7 @@ collision_mask = 1
 script = ExtResource("1_player")
 
 [node name="BodyVisual" type="Sprite2D" parent="."]
+scale = Vector2(0.55, 0.55)
 texture = ExtResource("10_player_sprite")
 
 [node name="DirectionPointer" type="Node2D" parent="."]
@@ -88,6 +89,7 @@ reach = 34.0
 active_duration = 0.12
 
 [node name="WeaponVisual" type="Sprite2D" parent="WeaponSocket/MeleeWeapon"]
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("11_slash_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponSocket/MeleeWeapon"]

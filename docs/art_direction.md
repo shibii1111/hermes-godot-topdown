@@ -80,4 +80,6 @@ Baseline source canvas guidelines:
 
 M6.0 introduced an initial pixel-art-oriented sprite pipeline. M6.0.1 pivots the approved direction away from strict `32x32` pixel art and toward A1.5 clean readable clockpunk.
 
-Existing M6.0 pixel assets can remain temporarily as placeholders, but future production sprites should follow this document instead of the earlier square pixel-art constraints.
+M6.0.2 replaces the first high-impact placeholder textures with A1.5-style production placeholders for the player, slash effect, automaton, mechanical rat, portals, gear icon/pickup, and floor tile seeds.
+
+These assets are still allowed to improve later, but they establish the accepted source-scale, silhouette, outline, and palette direction for future art passes.
