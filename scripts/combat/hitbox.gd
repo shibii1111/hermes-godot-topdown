@@ -37,6 +37,8 @@ func deactivate() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if not monitoring or _already_hit.has(area):
 		return
+	if source != null and source.is_ancestor_of(area):
+		return
 	if not area.has_method("receive_damage"):
 		return
 	_already_hit.append(area)

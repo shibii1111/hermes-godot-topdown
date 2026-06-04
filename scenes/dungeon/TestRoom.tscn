@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://roguewatch_test_room"]
+[gd_scene load_steps=8 format=3 uid="uid://roguewatch_test_room"]
 
 [ext_resource type="Script" path="res://scripts/dungeon/test_room.gd" id="1_test_room"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/combat/damage_zone.gd" id="3_damage_zone"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/EnemyAutomaton.tscn" id="4_automaton"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/EnemyMechanicalRat.tscn" id="5_rat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_damage_zone"]
 size = Vector2(96, 96)
@@ -49,6 +51,14 @@ polygon = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageCog"]
 shape = SubResource("RectangleShape2D_damage_zone")
 
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyAutomaton" parent="Enemies" groups=["enemies"] instance=ExtResource("4_automaton")]
+position = Vector2(560, 270)
+
+[node name="EnemyMechanicalRat" parent="Enemies" groups=["enemies"] instance=ExtResource("5_rat")]
+position = Vector2(980, 460)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUDPanel" type="PanelContainer" parent="CanvasLayer"]
@@ -70,16 +80,21 @@ theme_override_constants/separation = 8
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Milestone 1 - Salle de test"
+text = "Milestone 2 - Combat test"
 
 [node name="HealthLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Health: 5 / 5"
 
+[node name="CurrencyLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Run gears: 0"
+
 [node name="HintLabel" type="Label" parent="CanvasLayer/HUDPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "WASD/flèches: bouger | Space/clic/A: attaque | Shift/B: dash | zone rouge: dégâts"
+text = "Attaque les automates/rats. Zone rouge: dégâts. Les drops ajoutent des gears de run."
 
 [node name="ReturnHubButton" type="Button" parent="CanvasLayer"]
 unique_name_in_owner = true

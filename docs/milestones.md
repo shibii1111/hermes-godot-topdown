@@ -24,14 +24,14 @@ Statut: fondation implémentée.
 
 ## Milestone 2: Combat et ennemis
 
-Objectif:
+Statut: fondation implémentée.
 
 - Enemy base class.
-- Au moins 2 ennemis clockpunk.
-- IA simple.
+- 2 ennemis clockpunk: automate et rat mécanique.
+- IA simple chase/patrol.
 - Hitboxes/hurtboxes.
-- Feedback visuel de hit/death.
-- Drops simples.
+- Feedback visuel de hit/death minimal.
+- Drops simples de currency de run.
 
 ## Milestone 3: UI et menus
 

@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://roguewatch_enemy_automaton"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_automaton.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_ai_chase.gd" id="3_chase"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_ai_patrol.gd" id="4_patrol"]
+[ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="5_hurtbox"]
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="6_hitbox"]
+
+[sub_resource type="CircleShape2D" id="body_shape"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="hurt_shape"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="contact_shape"]
+radius = 18.0
+
+[node name="EnemyAutomaton" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_enemy")
+move_speed = 72.0
+contact_damage = 1
+drop_currency = 2
+
+[node name="BodyVisual" type="Polygon2D" parent="."]
+unique_name_in_owner = true
+color = Color(0.48, 0.34, 0.18, 1)
+polygon = PackedVector2Array(-13, -16, 13, -16, 16, 14, -16, 14)
+
+[node name="GearVisual" type="Polygon2D" parent="."]
+color = Color(0.86, 0.67, 0.28, 1)
+polygon = PackedVector2Array(0, -10, 4, -4, 10, 0, 4, 4, 0, 10, -4, 4, -10, 0, -4, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("body_shape")
+
+[node name="Components" type="Node" parent="."]
+
+[node name="HealthComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("2_health")
+max_health = 3
+
+[node name="EnemyAIChase" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("3_chase")
+aggro_range = 260.0
+
+[node name="EnemyAIPatrol" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("4_patrol")
+switch_interval = 1.4
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("5_hurtbox")
+health_component_path = NodePath("../Components/HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("hurt_shape")
+
+[node name="ContactHitbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_hitbox")
+damage_amount = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox"]
+shape = SubResource("contact_shape")
