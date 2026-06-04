@@ -21,10 +21,12 @@ process_mode = 3
 script = ExtResource("1_test_room")
 
 [node name="Floor" type="Polygon2D" parent="."]
+process_mode = 1
 color = Color(0.1, 0.085, 0.055, 1)
 polygon = PackedVector2Array(40, 40, 1240, 40, 1240, 680, 40, 680)
 
 [node name="RoomBorder" type="StaticBody2D" parent="."]
+process_mode = 1
 position = Vector2(640, 360)
 collision_layer = 1
 collision_mask = 1
@@ -39,9 +41,11 @@ disabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 unique_name_in_owner = true
+process_mode = 1
 position = Vector2(320, 360)
 
 [node name="DamageCog" type="Area2D" parent="."]
+process_mode = 1
 position = Vector2(760, 360)
 collision_layer = 0
 collision_mask = 1
@@ -57,6 +61,7 @@ polygon = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
 shape = SubResource("RectangleShape2D_damage_zone")
 
 [node name="Enemies" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="EnemyAutomaton" parent="Enemies" groups=["enemies"] instance=ExtResource("4_automaton")]
 position = Vector2(560, 270)
@@ -97,8 +102,12 @@ text = "Return to Hub"
 [node name="SpecialIndicator" parent="." instance=ExtResource("9_special")]
 unique_name_in_owner = true
 
-[node name="PauseMenu" parent="." instance=ExtResource("7_pause")]
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 20
+
+[node name="PauseMenu" parent="MenuLayer" instance=ExtResource("7_pause")]
 unique_name_in_owner = true
 
-[node name="InventoryMenu" parent="." instance=ExtResource("8_inventory")]
+[node name="InventoryMenu" parent="MenuLayer" instance=ExtResource("8_inventory")]
 unique_name_in_owner = true

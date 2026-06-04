@@ -13,9 +13,11 @@ script = ExtResource("1_dungeon")
 
 [node name="ActiveRoomContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
+process_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 unique_name_in_owner = true
+process_mode = 1
 position = Vector2(640, 392)
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
@@ -54,10 +56,14 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Return to Hub"
 
-[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 20
+
+[node name="PauseMenu" parent="MenuLayer" instance=ExtResource("4_pause")]
 unique_name_in_owner = true
 
-[node name="InventoryMenu" parent="." instance=ExtResource("5_inventory")]
+[node name="InventoryMenu" parent="MenuLayer" instance=ExtResource("5_inventory")]
 unique_name_in_owner = true
 
 [node name="SpecialIndicator" parent="." instance=ExtResource("6_special")]
