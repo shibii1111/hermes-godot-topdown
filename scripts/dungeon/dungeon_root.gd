@@ -24,6 +24,7 @@ var run_xp: int = 0
 var run_level: int = 1
 var xp_required: int = 10
 var transition_in_progress: bool = false
+var portal_transition_blocked_until_msec: int = 0
 
 
 ## Starts a generated run and wires shared run UI.
@@ -65,6 +66,8 @@ func generate_dungeon(seed_value: int = 0) -> void:
 ## Moves to the neighbor room connected by the requested cardinal direction.
 ## When a room id is supplied, stale portal signals from unloaded rooms are ignored.
 func transition_to_neighbor(direction: String, source_room_id: String = "") -> void:
+	if Time.get_ticks_msec() < portal_transition_blocked_until_msec:
+		return
 	if source_room_id != "" and source_room_id != current_room_id:
 		return
 	if transition_in_progress:
@@ -86,6 +89,7 @@ func _complete_transition_to_neighbor(direction: String, source_room_id: String 
 	if not neighbors.has(direction):
 		transition_in_progress = false
 		return
+	portal_transition_blocked_until_msec = Time.get_ticks_msec() + 350
 	current_room_id = String(neighbors[direction])
 	_load_current_room(direction)
 	transition_in_progress = false
