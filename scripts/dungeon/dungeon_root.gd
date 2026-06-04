@@ -205,7 +205,7 @@ func _on_player_health_changed(current_health: int, max_health: int) -> void:
 ## Grants enemy XP immediately and drops run currency as physical loot.
 func _on_enemy_died(_enemy: Node, currency_value: int, xp_value: int) -> void:
 	progression.grant_enemy_reward(0, xp_value)
-	_spawn_currency_pickup(_enemy, currency_value)
+	_spawn_currency_pickup.call_deferred(_enemy, currency_value)
 
 
 ## Spawns a physical gear pickup for enemy currency so loot is collected in-world.

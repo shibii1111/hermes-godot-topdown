@@ -15,6 +15,8 @@ signal close_requested()
 ## Builds deterministic placeholder slots and hides the menu until requested.
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	_fit_to_viewport()
+	get_viewport().size_changed.connect(_fit_to_viewport)
 	_build_slots()
 	close_button.pressed.connect(_on_close_pressed)
 	hide_inventory()
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 ## Displays the inventory and focuses the close button for controller navigation.
 func show_inventory() -> void:
+	_fit_to_viewport()
 	visible = true
 	close_button.grab_focus()
 
@@ -59,3 +62,13 @@ func _build_slots() -> void:
 func _on_close_pressed() -> void:
 	hide_inventory()
 	close_requested.emit()
+
+
+## Keeps this overlay centered even when instanced below a Node2D gameplay root.
+func _fit_to_viewport() -> void:
+	anchor_left = 0.0
+	anchor_top = 0.0
+	anchor_right = 0.0
+	anchor_bottom = 0.0
+	position = Vector2.ZERO
+	size = get_viewport_rect().size

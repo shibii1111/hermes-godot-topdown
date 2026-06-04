@@ -36,6 +36,6 @@ func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
 	_collected = true
-	monitoring = false
+	set_deferred("monitoring", false)
 	collected.emit(max(0, currency_value))
 	queue_free()

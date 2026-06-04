@@ -12,6 +12,8 @@ var cooldown_time: float = 0.0
 
 ## Initializes the indicator in a ready state.
 func _ready() -> void:
+	_fit_to_viewport()
+	get_viewport().size_changed.connect(_fit_to_viewport)
 	set_ready()
 
 
@@ -36,3 +38,13 @@ func _process(delta: float) -> void:
 func set_ready() -> void:
 	status_label.text = "Clockburst ready"
 	cooldown_bar.value = 100.0
+
+
+## Keeps the bottom-right anchor relative to the viewport below Node2D gameplay roots.
+func _fit_to_viewport() -> void:
+	anchor_left = 0.0
+	anchor_top = 0.0
+	anchor_right = 0.0
+	anchor_bottom = 0.0
+	position = Vector2.ZERO
+	size = get_viewport_rect().size
