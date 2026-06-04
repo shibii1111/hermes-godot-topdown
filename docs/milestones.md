@@ -72,7 +72,7 @@ Goal:
 - M6.0.1: Approved A1.5 clean readable clockpunk style direction.
 - M6.0.2: Replace first high-impact placeholders with A1.5-style production placeholders.
 - M6.1: Run XP, level-up rollover, enemy XP rewards, and temporary damage stat bonuses.
-- Loot.
+- M6.2: Physical gear loot pickups dropped from dungeon enemies and collected into run currency.
 - Equipment.
 - Skills/spells.
 - Merchant/NPC.

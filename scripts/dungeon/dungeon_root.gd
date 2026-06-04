@@ -6,6 +6,7 @@ class_name DungeonRoot
 
 const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator.gd")
 const RunProgressionScript := preload("res://scripts/progression/run_progression.gd")
+const GearPickupScene := preload("res://scenes/items/GearPickup.tscn")
 
 @onready var active_room_container: Node2D = %ActiveRoomContainer
 @onready var player: Node = %Player
@@ -201,9 +202,27 @@ func _on_player_health_changed(current_health: int, max_health: int) -> void:
 	hud.set_health(current_health, max_health)
 
 
-## Adds run currency and XP dropped by a dead enemy.
+## Grants enemy XP immediately and drops run currency as physical loot.
 func _on_enemy_died(_enemy: Node, currency_value: int, xp_value: int) -> void:
-	progression.grant_enemy_reward(currency_value, xp_value)
+	progression.grant_enemy_reward(0, xp_value)
+	_spawn_currency_pickup(_enemy, currency_value)
+
+
+## Spawns a physical gear pickup for enemy currency so loot is collected in-world.
+func _spawn_currency_pickup(enemy: Node, currency_value: int) -> void:
+	if currency_value <= 0 or active_room == null:
+		return
+	var pickup: Area2D = GearPickupScene.instantiate()
+	pickup.currency_value = currency_value
+	active_room.add_child(pickup)
+	if enemy is Node2D:
+		pickup.global_position = enemy.global_position
+	pickup.collected.connect(_on_currency_pickup_collected)
+
+
+## Converts a collected loot pickup into run currency progression.
+func _on_currency_pickup_collected(currency_value: int) -> void:
+	progression.grant_run_currency(currency_value)
 
 
 ## Applies run-level stat bonuses when the XP curve grants a level.

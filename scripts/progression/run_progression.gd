@@ -30,6 +30,12 @@ func grant_enemy_reward(currency_amount: int, xp_amount: int) -> void:
 	changed.emit(self)
 
 
+## Adds run currency collected from physical loot pickups without counting another enemy defeat.
+func grant_run_currency(currency_amount: int) -> void:
+	run_currency += max(0, currency_amount)
+	changed.emit(self)
+
+
 ## Clears run-only progression values for a new run.
 func reset() -> void:
 	run_currency = 0

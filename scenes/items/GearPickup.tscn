@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://roguewatch_gear_pickup"]
+
+[ext_resource type="Script" path="res://scripts/items/gear_pickup.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/pixel/items/gear_pickup.png" id="2_texture"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 22.0
+
+[node name="GearPickup" type="Area2D" groups=["loot_pickups"]]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Visual" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("2_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pickup")
