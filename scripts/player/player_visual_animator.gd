@@ -11,6 +11,7 @@ class_name PlayerVisualAnimator
 @export var attack_pop_scale: float = 0.08
 
 @onready var body_visual: Node2D = %BodyVisual
+@onready var dash_trail: Line2D = %DashTrail
 
 var _base_position: Vector2 = Vector2.ZERO
 var _base_scale: Vector2 = Vector2.ONE
@@ -18,12 +19,14 @@ var _animation_time: float = 0.0
 var _attack_time_remaining: float = 0.0
 var _current_state: String = "idle"
 var _animation_progress: float = 0.0
+var _dash_vfx_progress: float = 0.0
 
 
 ## Captures the authored sprite transform so polish can return to the scene baseline.
 func _ready() -> void:
 	_base_position = body_visual.position
 	_base_scale = body_visual.scale
+	dash_trail.visible = false
 	_apply_idle_pose()
 
 
@@ -69,21 +72,36 @@ func get_animation_progress() -> float:
 	return _animation_progress
 
 
+## Returns normalized dash readability VFX progress for validation and tuning.
+func get_dash_vfx_progress() -> float:
+	return _dash_vfx_progress
+
+
 func _apply_idle_pose() -> void:
 	body_visual.position = _base_position
 	body_visual.scale = _base_scale
+	dash_trail.visible = false
+	_dash_vfx_progress = 0.0
 
 
 func _apply_walk_pose() -> void:
 	body_visual.position = _base_position + Vector2(0.0, sin(_animation_time * walk_bob_speed) * walk_bob_amplitude)
 	body_visual.scale = _base_scale * (1.0 + (_animation_progress * 0.025))
+	dash_trail.visible = false
+	_dash_vfx_progress = 0.0
 
 
 func _apply_dash_pose() -> void:
 	body_visual.position = _base_position
 	body_visual.scale = Vector2(_base_scale.x * (1.0 + dash_stretch), _base_scale.y * (1.0 - dash_stretch * 0.5))
+	dash_trail.visible = true
+	dash_trail.default_color = Color(0.38, 0.95, 0.82, 0.78)
+	dash_trail.width = 4.0
+	_dash_vfx_progress = 1.0
 
 
 func _apply_attack_pose() -> void:
 	body_visual.position = _base_position
 	body_visual.scale = _base_scale * (1.0 + attack_pop_scale * _animation_progress)
+	dash_trail.visible = false
+	_dash_vfx_progress = 0.0

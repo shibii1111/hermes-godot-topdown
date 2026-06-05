@@ -94,6 +94,7 @@ Goal:
 - M7.2: Gear pickup collect micro-polish with an immediate pop and spark ring.
 - M7.3: Enemy hit/death micro-polish with readable sparks and death pop feedback.
 - M7.4: Basic player procedural visual animation for idle, walk, dash, and attack feedback.
+- M7.5: Dash trail and melee attack arc readability VFX without changing movement or weapon timing.
 - Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.

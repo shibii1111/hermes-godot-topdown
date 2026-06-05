@@ -43,6 +43,13 @@ rotation = 1.5708
 color = Color(0.95, 0.78, 0.35, 1)
 polygon = PackedVector2Array(0, -4, 12, 0, 0, 4)
 
+[node name="DashTrail" type="Line2D" parent="."]
+unique_name_in_owner = true
+visible = false
+width = 4.0
+default_color = Color(0.38, 0.95, 0.82, 0.78)
+points = PackedVector2Array(-18, 0, 0, 0, 18, 0)
+
 [node name="WeaponSocket" type="Node2D" parent="."]
 unique_name_in_owner = true
 
@@ -98,6 +105,13 @@ active_duration = 0.12
 [node name="WeaponVisual" type="Sprite2D" parent="WeaponSocket/MeleeWeapon"]
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("11_slash_sprite")
+
+[node name="AttackArc" type="Line2D" parent="WeaponSocket/MeleeWeapon"]
+unique_name_in_owner = true
+visible = false
+width = 4.0
+default_color = Color(1, 0.82, 0.35, 0.85)
+points = PackedVector2Array(0, -16, 14, -10, 22, 0, 14, 10, 0, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponSocket/MeleeWeapon"]
 shape = SubResource("RectangleShape2D_weapon")
