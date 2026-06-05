@@ -9,6 +9,7 @@ const SLOT_COUNT := 12
 signal close_requested()
 
 @onready var slot_grid: GridContainer = %SlotGrid
+@onready var equipment_label: Label = %EquipmentLabel
 @onready var close_button: Button = %CloseButton
 
 
@@ -40,6 +41,16 @@ func toggle_inventory() -> void:
 		hide_inventory()
 	else:
 		show_inventory()
+
+
+## Binds real equipment data into the overlay summary line.
+func set_equipment_summary(summary_text: String) -> void:
+	equipment_label.text = summary_text
+
+
+## Returns the currently displayed equipment text for validations and UI consumers.
+func get_equipment_summary_text() -> String:
+	return equipment_label.text
 
 
 ## Creates the temporary 12-slot inventory grid used by Milestone 3.

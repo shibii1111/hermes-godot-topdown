@@ -42,8 +42,9 @@ text = "Inventory"
 horizontal_alignment = 1
 
 [node name="EquipmentLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Weapon: Clockwork Blade | Spell: Clockburst"
+text = "Weapon: Clockwork Blade | Gear: DMG +1"
 
 [node name="SlotGrid" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

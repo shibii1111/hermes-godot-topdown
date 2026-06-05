@@ -73,7 +73,7 @@ Goal:
 - M6.0.2: Replace first high-impact placeholders with A1.5-style production placeholders.
 - M6.1: Run XP, level-up rollover, enemy XP rewards, and temporary damage stat bonuses.
 - M6.2: Physical gear loot pickups dropped from dungeon enemies and collected into run currency.
-- Equipment.
+- M6.3: Starter equipment loadout with Clockwork Blade weapon bonus and inventory summary binding.
 - Skills/spells.
 - Merchant/NPC.
 - Simple quests.

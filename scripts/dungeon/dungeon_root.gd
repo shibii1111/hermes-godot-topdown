@@ -6,6 +6,7 @@ class_name DungeonRoot
 
 const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator.gd")
 const RunProgressionScript := preload("res://scripts/progression/run_progression.gd")
+const EquipmentItemScript := preload("res://scripts/equipment/equipment_item.gd")
 const GearPickupScene := preload("res://scenes/items/GearPickup.tscn")
 
 @onready var active_room_container: Node2D = %ActiveRoomContainer
@@ -31,6 +32,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	progression.changed.connect(_on_progression_changed)
 	progression.leveled_up.connect(_on_run_leveled_up)
+	progression.equip_item(EquipmentItemScript.create_clockwork_blade())
 	player.health_changed.connect(_on_player_health_changed)
 	player.died.connect(_on_player_died)
 	pause_menu.resume_requested.connect(_resume_from_pause)
@@ -38,7 +40,9 @@ func _ready() -> void:
 	inventory_menu.close_requested.connect(_resume_from_inventory)
 	return_hub_button.pressed.connect(func() -> void: complete_run("manual_return"))
 	_on_player_health_changed(player.health_component.current_health, player.health_component.max_health)
+	_apply_progression_damage_bonus()
 	_update_progression_labels()
+	_update_inventory_equipment()
 	generate_dungeon(Time.get_unix_time_from_system())
 
 
@@ -226,14 +230,15 @@ func _on_currency_pickup_collected(currency_value: int) -> void:
 
 
 ## Applies run-level stat bonuses when the XP curve grants a level.
-func _on_run_leveled_up(_new_level: int, damage_bonus: int) -> void:
-	if player.has_method("set_run_damage_bonus"):
-		player.set_run_damage_bonus(damage_bonus)
+func _on_run_leveled_up(_new_level: int, _damage_bonus: int) -> void:
+	_apply_progression_damage_bonus()
 
 
 ## Refreshes HUD labels when run-only progression changes.
 func _on_progression_changed(_progression: RefCounted) -> void:
+	_apply_progression_damage_bonus()
 	_update_progression_labels()
+	_update_inventory_equipment()
 
 
 ## Updates the run currency, XP, level, and stat displays.
@@ -241,6 +246,18 @@ func _update_progression_labels() -> void:
 	hud.set_run_currency(progression.run_currency)
 	hud.set_xp(progression.current_xp, progression.xp_to_next_level, progression.level)
 	hud.set_run_stats(progression.get_stats_text())
+
+
+## Applies the combined equipment and level damage bonus to the player weapon.
+func _apply_progression_damage_bonus() -> void:
+	if player.has_method("set_run_damage_bonus"):
+		player.set_run_damage_bonus(progression.get_total_damage_bonus())
+
+
+## Keeps the inventory overlay bound to the current equipment loadout.
+func _update_inventory_equipment() -> void:
+	if inventory_menu.has_method("set_equipment_summary"):
+		inventory_menu.set_equipment_summary(progression.get_equipment_summary_text())
 
 
 ## Returns to the hub with collected rewards when the player dies.
