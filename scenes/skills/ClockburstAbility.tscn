@@ -14,8 +14,16 @@ cooldown_duration = 3.0
 active_duration = 0.18
 
 [node name="BurstVisual" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 color = Color(0.38, 0.95, 0.82, 0.34)
 polygon = PackedVector2Array(78, 0, 55.1543, 55.1543, 0, 78, -55.1543, 55.1543, -78, 0, -55.1543, -55.1543, 0, -78, 55.1543, -55.1543)
+
+[node name="VfxRing" type="Line2D" parent="."]
+unique_name_in_owner = true
+width = 5.0
+default_color = Color(1, 0.82, 0.35, 0.95)
+closed = true
+points = PackedVector2Array(86, 0, 60.8112, 60.8112, 0, 86, -60.8112, 60.8112, -86, 0, -60.8112, -60.8112, 0, -86, 60.8112, -60.8112)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_clockburst")
