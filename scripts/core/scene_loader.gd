@@ -9,6 +9,7 @@ const DUNGEON_SCENE := "res://scenes/dungeon/DungeonRoot.tscn"
 
 var _scene_container: Node = null
 var _current_scene: Node = null
+var _last_run_summary: Dictionary = {}
 
 
 ## Registers the container where game scenes will be instantiated.
@@ -52,3 +53,16 @@ func start_run() -> void:
 	GameState.set_mode(GameState.Mode.RUN)
 	change_scene(DUNGEON_SCENE)
 	SignalBus.run_started.emit()
+
+
+## Stores the most recent run ending in a tiny transition-owned summary for the next hub scene.
+func set_last_run_summary(reason: String, payout_gears: int) -> void:
+	_last_run_summary = {
+		"reason": reason,
+		"payout_gears": max(0, payout_gears)
+	}
+
+
+## Returns a copy of the most recent run summary so hub UI can display flow feedback.
+func get_last_run_summary() -> Dictionary:
+	return _last_run_summary.duplicate()

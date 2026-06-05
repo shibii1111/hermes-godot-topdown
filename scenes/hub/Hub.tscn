@@ -61,6 +61,13 @@ layout_mode = 2
 text = "Permanent gears: 0"
 horizontal_alignment = 1
 
+[node name="RunSummaryLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No completed run yet."
+autowrap_mode = 3
+horizontal_alignment = 1
+
 [node name="RunPortalButton" type="Button" parent="CanvasLayer/RootMargin/Columns/HubPanel/HubMargin/HubInfo"]
 unique_name_in_owner = true
 layout_mode = 2

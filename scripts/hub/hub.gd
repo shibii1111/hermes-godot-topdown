@@ -9,6 +9,7 @@ const MERCHANT_OFFER_ID := "winding_key"
 const QUEST_ID := "collect_3_gears"
 
 @onready var permanent_currency_label: Label = %PermanentCurrencyLabel
+@onready var run_summary_label: Label = %RunSummaryLabel
 @onready var upgrade_status_label: Label = %UpgradeStatusLabel
 @onready var upgrade_description_label: Label = %UpgradeDescriptionLabel
 @onready var upgrade_button: Button = %UpgradeButton
@@ -38,6 +39,7 @@ func _ready() -> void:
 ## Refreshes all hub UI labels and upgrade button state from SaveManager.
 func refresh_hub_state() -> void:
 	permanent_currency_label.text = "Permanent gears: %d" % SaveManager.permanent_currency
+	_refresh_run_summary()
 	var definition := SaveManager.get_upgrade_definition(REINFORCED_HEART)
 	var level := SaveManager.get_upgrade_level(REINFORCED_HEART)
 	var max_level: int = int(definition.get("max_level", 0))
@@ -53,6 +55,28 @@ func refresh_hub_state() -> void:
 		upgrade_button.disabled = SaveManager.permanent_currency < cost
 	_refresh_merchant_state()
 	_refresh_quest_state()
+
+
+## Shows a compact summary of the last completed run so the hub return loop is readable.
+func _refresh_run_summary() -> void:
+	var summary: Dictionary = SceneLoader.get_last_run_summary()
+	if summary.is_empty():
+		run_summary_label.text = "No completed run yet."
+		return
+	var reason: String = String(summary.get("reason", "unknown"))
+	var payout_gears: int = int(summary.get("payout_gears", 0))
+	run_summary_label.text = "Last run: %s, %d gears banked." % [_format_run_end_reason(reason), payout_gears]
+
+
+## Converts internal run-end ids into player-readable hub text.
+func _format_run_end_reason(reason: String) -> String:
+	match reason:
+		"manual_return":
+			return "manual return"
+		"player_death":
+			return "player death"
+		_:
+			return reason.replace("_", " ")
 
 
 ## Refreshes the merchant NPC offer using SaveManager purchase state.

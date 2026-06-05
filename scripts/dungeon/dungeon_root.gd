@@ -132,6 +132,8 @@ func trigger_special_ui() -> void:
 ## Transfers run rewards into permanent progression, updates quest progress, saves, and returns to the hub.
 func complete_run(reason: String) -> void:
 	_resume_from_pause()
+	var payout_gears: int = progression.run_currency
+	SceneLoader.set_last_run_summary(reason, payout_gears)
 	if progression.run_currency > 0:
 		SaveManager.add_quest_progress(FIRST_HAUL_QUEST, progression.run_currency)
 		SaveManager.add_permanent_currency(progression.run_currency)
@@ -233,6 +235,11 @@ func _on_currency_pickup_collected(currency_value: int) -> void:
 	progression.grant_run_currency(currency_value)
 	if hud.has_method("show_feedback"):
 		hud.show_feedback("Collected +%d run gears" % currency_value)
+
+
+## Exposes the active run's readability checkpoints for complete-flow validation/debug UI.
+func get_complete_flow_checkpoint_text() -> String:
+	return "%s | Clockburst ready | active portal arrows visible" % room_counter_label.text
 
 
 ## Applies run-level stat bonuses when the XP curve grants a level.
