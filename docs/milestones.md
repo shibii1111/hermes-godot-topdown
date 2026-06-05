@@ -95,6 +95,7 @@ Goal:
 - M7.3: Enemy hit/death micro-polish with readable sparks and death pop feedback.
 - M7.4: Basic player procedural visual animation for idle, walk, dash, and attack feedback.
 - M7.5: Dash trail and melee attack arc readability VFX without changing movement or weapon timing.
+- M7.6: Room portal readability polish with active-exit highlights and direction arrows.
 - Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.
