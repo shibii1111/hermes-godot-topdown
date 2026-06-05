@@ -92,6 +92,7 @@ Goal:
 - M7.0: Lightweight HUD feedback for run gear pickups.
 - M7.1: Readable Clockburst radial VFX ring with expanding/fading burst polish.
 - M7.2: Gear pickup collect micro-polish with an immediate pop and spark ring.
+- M7.3: Enemy hit/death micro-polish with readable sparks and death pop feedback.
 - Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.

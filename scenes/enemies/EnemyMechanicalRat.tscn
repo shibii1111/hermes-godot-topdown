@@ -31,6 +31,22 @@ unique_name_in_owner = true
 scale = Vector2(0.62, 0.62)
 texture = ExtResource("7_rat_sprite")
 
+[node name="HitSpark" type="Line2D" parent="."]
+unique_name_in_owner = true
+visible = false
+width = 3.0
+default_color = Color(1, 0.86, 0.36, 0.9)
+closed = true
+points = PackedVector2Array(18, 0, 0, 18, -18, 0, 0, -18)
+
+[node name="DeathSpark" type="Line2D" parent="."]
+unique_name_in_owner = true
+visible = false
+width = 5.0
+default_color = Color(1, 0.55, 0.28, 0.94)
+closed = true
+points = PackedVector2Array(25, 0, 17.6777, 17.6777, 0, 25, -17.6777, 17.6777, -25, 0, -17.6777, -17.6777, 0, -25, 17.6777, -17.6777)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("body_shape")
 
