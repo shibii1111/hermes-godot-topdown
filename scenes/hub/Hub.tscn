@@ -109,3 +109,42 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 text = "Upgrade - 3 gears"
+
+[node name="MerchantPanel" type="PanelContainer" parent="CanvasLayer/RootMargin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MerchantMargin" type="MarginContainer" parent="CanvasLayer/RootMargin/Columns/MerchantPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="MerchantStation" type="VBoxContainer" parent="CanvasLayer/RootMargin/Columns/MerchantPanel/MerchantMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="MerchantTitle" type="Label" parent="CanvasLayer/RootMargin/Columns/MerchantPanel/MerchantMargin/MerchantStation"]
+layout_mode = 2
+text = "Merchant NPC"
+horizontal_alignment = 1
+
+[node name="MerchantNameLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/MerchantPanel/MerchantMargin/MerchantStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Brass Merchant"
+horizontal_alignment = 1
+
+[node name="MerchantOfferLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/MerchantPanel/MerchantMargin/MerchantStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Winding Key - 2 gears\nA brass key wound by the hub merchant."
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="MerchantButton" type="Button" parent="CanvasLayer/RootMargin/Columns/MerchantPanel/MerchantMargin/MerchantStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Buy - 2 gears"

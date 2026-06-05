@@ -75,7 +75,7 @@ Goal:
 - M6.2: Physical gear loot pickups dropped from dungeon enemies and collected into run currency.
 - M6.3: Starter equipment loadout with Clockwork Blade weapon bonus and inventory summary binding.
 - M6.4: Clockburst gameplay spell with radial damage, cooldown, and real UI binding.
-- Merchant/NPC.
+- M6.5: Hub merchant NPC with a permanent Winding Key shop offer and saved purchase state.
 - Simple quests.
 
 Art integration rule:

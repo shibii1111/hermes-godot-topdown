@@ -5,6 +5,7 @@ extends Node
 
 const DEFAULT_SAVE_PATH := "user://roguewatch_save.json"
 const REINFORCED_HEART := "reinforced_heart"
+const MerchantCatalogScript := preload("res://scripts/npcs/merchant_catalog.gd")
 const UPGRADE_DEFINITIONS := {
 	REINFORCED_HEART: {
 		"display_name": "Reinforced Heart",
@@ -16,6 +17,7 @@ const UPGRADE_DEFINITIONS := {
 
 var permanent_currency: int = 0
 var upgrade_levels: Dictionary = {}
+var merchant_purchases: Dictionary = {}
 var _save_path: String = DEFAULT_SAVE_PATH
 
 
@@ -33,6 +35,7 @@ func set_save_path(next_save_path: String) -> void:
 func reset_for_tests() -> void:
 	permanent_currency = 0
 	upgrade_levels.clear()
+	merchant_purchases.clear()
 	SignalBus.permanent_currency_changed.emit(permanent_currency)
 	SignalBus.upgrade_purchased.emit(REINFORCED_HEART, 0)
 
@@ -60,6 +63,31 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 	SignalBus.upgrade_purchased.emit(upgrade_id, current_level + 1)
 	save_game()
 	return true
+
+
+## Attempts to buy a permanent merchant offer once.
+func purchase_merchant_offer(offer_id: String) -> bool:
+	var definition := MerchantCatalogScript.get_offer_definition(offer_id)
+	if definition.is_empty() or has_merchant_purchase(offer_id):
+		return false
+	var cost: int = int(definition.get("cost", 0))
+	if permanent_currency < cost:
+		return false
+	permanent_currency -= cost
+	merchant_purchases[offer_id] = true
+	SignalBus.permanent_currency_changed.emit(permanent_currency)
+	save_game()
+	return true
+
+
+## Returns true when a permanent merchant offer has already been bought.
+func has_merchant_purchase(offer_id: String) -> bool:
+	return bool(merchant_purchases.get(offer_id, false))
+
+
+## Exposes merchant offer metadata to hub UI without duplicating catalog data.
+func get_merchant_offer_definition(offer_id: String) -> Dictionary:
+	return MerchantCatalogScript.get_offer_definition(offer_id)
 
 
 ## Returns the current purchased level for a permanent upgrade.
@@ -122,7 +150,8 @@ func load_game() -> bool:
 func to_dict() -> Dictionary:
 	return {
 		"permanent_currency": permanent_currency,
-		"upgrade_levels": upgrade_levels
+		"upgrade_levels": upgrade_levels,
+		"merchant_purchases": merchant_purchases
 	}
 
 
@@ -130,9 +159,13 @@ func to_dict() -> Dictionary:
 func from_dict(data: Dictionary) -> void:
 	permanent_currency = max(0, int(data.get("permanent_currency", 0)))
 	upgrade_levels.clear()
+	merchant_purchases.clear()
 	var saved_upgrades: Dictionary = data.get("upgrade_levels", {})
 	for upgrade_id in saved_upgrades.keys():
 		upgrade_levels[String(upgrade_id)] = max(0, int(saved_upgrades[upgrade_id]))
+	var saved_merchant_purchases: Dictionary = data.get("merchant_purchases", {})
+	for offer_id in saved_merchant_purchases.keys():
+		merchant_purchases[String(offer_id)] = bool(saved_merchant_purchases[offer_id])
 	SignalBus.permanent_currency_changed.emit(permanent_currency)
 	for upgrade_id in upgrade_levels.keys():
 		SignalBus.upgrade_purchased.emit(upgrade_id, get_upgrade_level(upgrade_id))
