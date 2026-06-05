@@ -8,6 +8,18 @@ class_name HUD
 @onready var run_currency_label: Label = %RunCurrencyLabel
 @onready var xp_label: Label = %XPLabel
 @onready var stats_label: Label = %StatsLabel
+@onready var feedback_label: Label = %FeedbackLabel
+
+var _feedback_time_remaining: float = 0.0
+
+
+## Counts down temporary feedback messages without owning gameplay state.
+func _process(delta: float) -> void:
+	if _feedback_time_remaining <= 0.0:
+		return
+	_feedback_time_remaining = max(0.0, _feedback_time_remaining - delta)
+	if _feedback_time_remaining <= 0.0:
+		feedback_label.visible = false
 
 
 ## Updates the player's current and maximum health text.
@@ -28,3 +40,15 @@ func set_xp(current_xp: int, required_xp: int, level: int) -> void:
 ## Updates the current run stat bonuses and counters.
 func set_run_stats(stats_text: String) -> void:
 	stats_label.text = stats_text
+
+
+## Shows a short, readable run feedback message for pickups and milestone moments.
+func show_feedback(message: String, duration: float = 2.0) -> void:
+	feedback_label.text = message
+	feedback_label.visible = message != ""
+	_feedback_time_remaining = max(0.0, duration)
+
+
+## Returns the current feedback message for validations and UI consumers.
+func get_feedback_text() -> String:
+	return feedback_label.text

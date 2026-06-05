@@ -48,3 +48,10 @@ text = "Level 1 - XP: 0 / 10"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Stats: DMG +0 | Defeated: 0"
+
+[node name="FeedbackLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+modulate = Color(1, 0.82, 0.35, 1)

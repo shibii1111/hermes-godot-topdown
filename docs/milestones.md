@@ -89,6 +89,7 @@ Art integration rule:
 
 Goal:
 
+- M7.0: Lightweight HUD feedback for run gear pickups.
 - Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.

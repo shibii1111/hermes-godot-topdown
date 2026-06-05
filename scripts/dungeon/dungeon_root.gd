@@ -228,9 +228,11 @@ func _spawn_currency_pickup(enemy: Node, currency_value: int) -> void:
 	pickup.collected.connect(_on_currency_pickup_collected)
 
 
-## Converts a collected loot pickup into run currency progression.
+## Converts a collected loot pickup into run currency progression and readable HUD feedback.
 func _on_currency_pickup_collected(currency_value: int) -> void:
 	progression.grant_run_currency(currency_value)
+	if hud.has_method("show_feedback"):
+		hud.show_feedback("Collected +%d run gears" % currency_value)
 
 
 ## Applies run-level stat bonuses when the XP curve grants a level.
