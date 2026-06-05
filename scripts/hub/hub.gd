@@ -6,6 +6,7 @@ class_name Hub
 
 const REINFORCED_HEART := "reinforced_heart"
 const MERCHANT_OFFER_ID := "winding_key"
+const QUEST_ID := "collect_3_gears"
 
 @onready var permanent_currency_label: Label = %PermanentCurrencyLabel
 @onready var upgrade_status_label: Label = %UpgradeStatusLabel
@@ -14,6 +15,9 @@ const MERCHANT_OFFER_ID := "winding_key"
 @onready var merchant_name_label: Label = %MerchantNameLabel
 @onready var merchant_offer_label: Label = %MerchantOfferLabel
 @onready var merchant_button: Button = %MerchantButton
+@onready var quest_giver_name_label: Label = %QuestGiverNameLabel
+@onready var quest_status_label: Label = %QuestStatusLabel
+@onready var quest_button: Button = %QuestButton
 @onready var run_portal_button: Button = %RunPortalButton
 @onready var menu_button: Button = %MenuButton
 
@@ -24,6 +28,7 @@ func _ready() -> void:
 	SignalBus.upgrade_purchased.connect(_on_upgrade_purchased)
 	upgrade_button.pressed.connect(_on_upgrade_pressed)
 	merchant_button.pressed.connect(_on_merchant_pressed)
+	quest_button.pressed.connect(_on_quest_pressed)
 	run_portal_button.pressed.connect(_on_start_run_pressed)
 	menu_button.pressed.connect(_on_menu_pressed)
 	refresh_hub_state()
@@ -47,6 +52,7 @@ func refresh_hub_state() -> void:
 		upgrade_button.text = "Upgrade - %d gears" % cost
 		upgrade_button.disabled = SaveManager.permanent_currency < cost
 	_refresh_merchant_state()
+	_refresh_quest_state()
 
 
 ## Refreshes the merchant NPC offer using SaveManager purchase state.
@@ -65,6 +71,27 @@ func _refresh_merchant_state() -> void:
 		merchant_button.disabled = SaveManager.permanent_currency < cost
 
 
+## Refreshes the simple quest giver panel from saved quest progress.
+func _refresh_quest_state() -> void:
+	quest_giver_name_label.text = "Archivist Gearwright"
+	var quest := SaveManager.get_quest_definition(QUEST_ID)
+	var display_name: String = String(quest.get("display_name", "Unknown Quest"))
+	var description: String = String(quest.get("description", "No description."))
+	var target_amount: int = int(quest.get("target_amount", 0))
+	var reward_gears: int = int(quest.get("reward_gears", 0))
+	var progress: int = SaveManager.get_quest_progress(QUEST_ID)
+	quest_status_label.text = "%s: %d / %d gears\n%s" % [display_name, progress, target_amount, description]
+	if SaveManager.is_quest_reward_claimed(QUEST_ID):
+		quest_button.text = "Reward Claimed"
+		quest_button.disabled = true
+	elif SaveManager.is_quest_completed(QUEST_ID):
+		quest_button.text = "Claim Reward - %d gear" % reward_gears
+		quest_button.disabled = false
+	else:
+		quest_button.text = "Quest In Progress"
+		quest_button.disabled = true
+
+
 ## Attempts to buy the selected permanent upgrade and refreshes the station.
 func _on_upgrade_pressed() -> void:
 	SaveManager.purchase_upgrade(REINFORCED_HEART)
@@ -74,6 +101,12 @@ func _on_upgrade_pressed() -> void:
 ## Attempts to buy the first merchant offer and updates the hub shop panel.
 func _on_merchant_pressed() -> void:
 	SaveManager.purchase_merchant_offer(MERCHANT_OFFER_ID)
+	refresh_hub_state()
+
+
+## Attempts to claim the first quest reward and refreshes the quest giver panel.
+func _on_quest_pressed() -> void:
+	SaveManager.claim_quest_reward(QUEST_ID)
 	refresh_hub_state()
 
 

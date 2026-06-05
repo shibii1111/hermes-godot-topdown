@@ -8,6 +8,7 @@ const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator
 const RunProgressionScript := preload("res://scripts/progression/run_progression.gd")
 const EquipmentItemScript := preload("res://scripts/equipment/equipment_item.gd")
 const GearPickupScene := preload("res://scenes/items/GearPickup.tscn")
+const FIRST_HAUL_QUEST := "collect_3_gears"
 
 @onready var active_room_container: Node2D = %ActiveRoomContainer
 @onready var player: Node = %Player
@@ -128,10 +129,11 @@ func trigger_special_ui() -> void:
 		player.cast_clockburst()
 
 
-## Transfers run rewards into permanent progression, saves, and returns to the hub.
+## Transfers run rewards into permanent progression, updates quest progress, saves, and returns to the hub.
 func complete_run(reason: String) -> void:
 	_resume_from_pause()
 	if progression.run_currency > 0:
+		SaveManager.add_quest_progress(FIRST_HAUL_QUEST, progression.run_currency)
 		SaveManager.add_permanent_currency(progression.run_currency)
 		SaveManager.save_game()
 		progression.run_currency = 0

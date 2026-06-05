@@ -148,3 +148,43 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 text = "Buy - 2 gears"
+
+[node name="QuestPanel" type="PanelContainer" parent="CanvasLayer/RootMargin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuestMargin" type="MarginContainer" parent="CanvasLayer/RootMargin/Columns/QuestPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="QuestStation" type="VBoxContainer" parent="CanvasLayer/RootMargin/Columns/QuestPanel/QuestMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="QuestTitle" type="Label" parent="CanvasLayer/RootMargin/Columns/QuestPanel/QuestMargin/QuestStation"]
+layout_mode = 2
+text = "Quest Giver"
+horizontal_alignment = 1
+
+[node name="QuestGiverNameLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/QuestPanel/QuestMargin/QuestStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Archivist Gearwright"
+horizontal_alignment = 1
+
+[node name="QuestStatusLabel" type="Label" parent="CanvasLayer/RootMargin/Columns/QuestPanel/QuestMargin/QuestStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "First Haul: 0 / 3 gears\nCollect 3 run gears and return to the hub."
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="QuestButton" type="Button" parent="CanvasLayer/RootMargin/Columns/QuestPanel/QuestMargin/QuestStation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quest In Progress"
+disabled = true

@@ -76,7 +76,7 @@ Goal:
 - M6.3: Starter equipment loadout with Clockwork Blade weapon bonus and inventory summary binding.
 - M6.4: Clockburst gameplay spell with radial damage, cooldown, and real UI binding.
 - M6.5: Hub merchant NPC with a permanent Winding Key shop offer and saved purchase state.
-- Simple quests.
+- M6.6: Simple First Haul quest with saved progress, run payout tracking, and hub reward claim UI.
 
 Art integration rule:
 
