@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://roguewatch_clockburst_ability"]
+
+[ext_resource type="Script" path="res://scripts/skills/clockburst_ability.gd" id="1_clockburst"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_clockburst"]
+radius = 78.0
+
+[node name="ClockburstAbility" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_clockburst")
+damage_amount = 2
+cooldown_duration = 3.0
+active_duration = 0.18
+
+[node name="BurstVisual" type="Polygon2D" parent="."]
+color = Color(0.38, 0.95, 0.82, 0.34)
+polygon = PackedVector2Array(78, 0, 55.1543, 55.1543, 0, 78, -55.1543, 55.1543, -78, 0, -55.1543, -55.1543, 0, -78, 55.1543, -55.1543)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_clockburst")

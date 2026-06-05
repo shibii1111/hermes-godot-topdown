@@ -14,6 +14,7 @@ signal health_changed(current_health: int, max_health: int)
 @onready var combat: Node = %PlayerCombat
 @onready var health_component: Node = %HealthComponent
 @onready var direction_pointer: Node2D = %DirectionPointer
+@onready var clockburst_ability: Node = %ClockburstAbility
 
 
 ## Connects health signals from the HealthComponent.
@@ -49,6 +50,16 @@ func receive_damage(damage_data: Resource) -> void:
 ## Applies temporary run-level combat bonuses pushed by the active run progression.
 func set_run_damage_bonus(damage_bonus: int) -> void:
 	combat.set_damage_bonus(damage_bonus)
+
+
+## Casts the current special ability using the player's facing direction.
+func cast_clockburst() -> bool:
+	return clockburst_ability.cast(self, facing.facing_direction)
+
+
+## Exposes the special ability node for UI binding without coupling UI to scene paths.
+func get_clockburst_ability() -> Node:
+	return clockburst_ability
 
 
 ## Applies permanent progression bonuses before the run begins.

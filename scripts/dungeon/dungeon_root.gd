@@ -43,6 +43,7 @@ func _ready() -> void:
 	_apply_progression_damage_bonus()
 	_update_progression_labels()
 	_update_inventory_equipment()
+	_bind_special_indicator()
 	generate_dungeon(Time.get_unix_time_from_system())
 
 
@@ -123,7 +124,8 @@ func toggle_inventory_menu() -> void:
 
 ## Triggers the temporary special/spell UI feedback for the Clockburst action.
 func trigger_special_ui() -> void:
-	special_indicator.trigger_special()
+	if player.has_method("cast_clockburst"):
+		player.cast_clockburst()
 
 
 ## Transfers run rewards into permanent progression, saves, and returns to the hub.
@@ -258,6 +260,12 @@ func _apply_progression_damage_bonus() -> void:
 func _update_inventory_equipment() -> void:
 	if inventory_menu.has_method("set_equipment_summary"):
 		inventory_menu.set_equipment_summary(progression.get_equipment_summary_text())
+
+
+## Binds the special HUD element to the player's real Clockburst ability.
+func _bind_special_indicator() -> void:
+	if player.has_method("get_clockburst_ability") and special_indicator.has_method("bind_clockburst"):
+		special_indicator.bind_clockburst(player.get_clockburst_ability())
 
 
 ## Returns to the hub with collected rewards when the player dies.

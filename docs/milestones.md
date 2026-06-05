@@ -74,7 +74,7 @@ Goal:
 - M6.1: Run XP, level-up rollover, enemy XP rewards, and temporary damage stat bonuses.
 - M6.2: Physical gear loot pickups dropped from dungeon enemies and collected into run currency.
 - M6.3: Starter equipment loadout with Clockwork Blade weapon bonus and inventory summary binding.
-- Skills/spells.
+- M6.4: Clockburst gameplay spell with radial damage, cooldown, and real UI binding.
 - Merchant/NPC.
 - Simple quests.
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://roguewatch_player"]
+[gd_scene load_steps=16 format=3 uid="uid://roguewatch_player"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="2_controller"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/combat/hurtbox.gd" id="9_hurtbox"]
 [ext_resource type="Texture2D" path="res://assets/pixel/player/clockmaker_player.png" id="10_player_sprite"]
 [ext_resource type="Texture2D" path="res://assets/pixel/player/brass_slash.png" id="11_slash_sprite"]
+[ext_resource type="PackedScene" path="res://scenes/skills/ClockburstAbility.tscn" id="12_clockburst"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 11.0
@@ -94,6 +95,9 @@ texture = ExtResource("11_slash_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponSocket/MeleeWeapon"]
 shape = SubResource("RectangleShape2D_weapon")
+
+[node name="ClockburstAbility" parent="WeaponSocket" instance=ExtResource("12_clockburst")]
+unique_name_in_owner = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
