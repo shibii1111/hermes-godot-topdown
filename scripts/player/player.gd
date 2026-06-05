@@ -12,6 +12,7 @@ signal health_changed(current_health: int, max_health: int)
 @onready var facing: Node = %PlayerFacing
 @onready var dash: Node = %PlayerDash
 @onready var combat: Node = %PlayerCombat
+@onready var visual_animator: Node = %PlayerVisualAnimator
 @onready var health_component: Node = %HealthComponent
 @onready var direction_pointer: Node2D = %DirectionPointer
 @onready var clockburst_ability: Node = %ClockburstAbility
@@ -33,10 +34,12 @@ func _physics_process(delta: float) -> void:
 	dash.update_dash(delta, controller.wants_dash(), facing.facing_direction)
 	combat.update_combat(delta)
 	combat.update_weapon_direction(facing.facing_direction)
+	visual_animator.update_visuals(delta, move_vector, dash.is_dashing())
 	_update_direction_pointer()
 
 	if controller.wants_attack():
-		combat.try_attack(self)
+		if combat.try_attack(self):
+			play_attack_feedback()
 
 	velocity = movement.calculate_velocity(move_vector, dash.get_dash_velocity())
 	move_and_slide()
@@ -60,6 +63,16 @@ func cast_clockburst() -> bool:
 ## Exposes the special ability node for UI binding without coupling UI to scene paths.
 func get_clockburst_ability() -> Node:
 	return clockburst_ability
+
+
+## Exposes the visual-only animator for debug tooling and headless validation.
+func get_visual_animator() -> Node:
+	return visual_animator
+
+
+## Triggers attack-only visual feedback while combat keeps owning damage/cooldowns.
+func play_attack_feedback() -> void:
+	visual_animator.notify_attack()
 
 
 ## Applies permanent progression bonuses before the run begins.
