@@ -97,6 +97,7 @@ Goal:
 - M7.5: Dash trail and melee attack arc readability VFX without changing movement or weapon timing.
 - M7.6: Room portal readability polish with active-exit highlights and direction arrows.
 - M7.7: Complete flow polish validation with returned-run summary and new-run upgrade continuity.
+- M7.8: Starter balance tuning profile aligning first level-up, enemy rewards, and first hub upgrade cost.
 - Improve and complete coherent clean readable clockpunk assets introduced progressively during M6.
 - Basic animations.
 - Visual effects.

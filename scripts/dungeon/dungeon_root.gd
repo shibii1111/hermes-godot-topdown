@@ -6,6 +6,7 @@ class_name DungeonRoot
 
 const DungeonGeneratorScript := preload("res://scripts/dungeon/dungeon_generator.gd")
 const RunProgressionScript := preload("res://scripts/progression/run_progression.gd")
+const RunBalanceScript := preload("res://scripts/balance/run_balance.gd")
 const EquipmentItemScript := preload("res://scripts/equipment/equipment_item.gd")
 const GearPickupScene := preload("res://scenes/items/GearPickup.tscn")
 const FIRST_HAUL_QUEST := "collect_3_gears"
@@ -240,6 +241,12 @@ func _on_currency_pickup_collected(currency_value: int) -> void:
 ## Exposes the active run's readability checkpoints for complete-flow validation/debug UI.
 func get_complete_flow_checkpoint_text() -> String:
 	return "%s | Clockburst ready | active portal arrows visible" % room_counter_label.text
+
+
+## Exposes starter-loop balance pacing without coupling tests to scattered scene internals.
+func get_balance_checkpoint_text() -> String:
+	var balance = RunBalanceScript.new()
+	return balance.get_starter_balance_summary()
 
 
 ## Applies run-level stat bonuses when the XP curve grants a level.

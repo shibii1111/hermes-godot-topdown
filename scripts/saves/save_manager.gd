@@ -5,12 +5,13 @@ extends Node
 
 const DEFAULT_SAVE_PATH := "user://roguewatch_save.json"
 const REINFORCED_HEART := "reinforced_heart"
+const RunBalanceScript := preload("res://scripts/balance/run_balance.gd")
 const MerchantCatalogScript := preload("res://scripts/npcs/merchant_catalog.gd")
 const QuestCatalogScript := preload("res://scripts/quests/quest_catalog.gd")
 const UPGRADE_DEFINITIONS := {
 	REINFORCED_HEART: {
 		"display_name": "Reinforced Heart",
-		"base_cost": 3,
+		"base_cost": RunBalanceScript.FIRST_REINFORCED_HEART_COST,
 		"max_level": 3,
 		"description": "+1 max health per level for future runs."
 	}

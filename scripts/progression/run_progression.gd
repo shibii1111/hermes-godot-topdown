@@ -7,9 +7,10 @@ class_name RunProgression
 signal changed(progression: RunProgression)
 signal leveled_up(new_level: int, damage_bonus: int)
 
-const BASE_XP_TO_NEXT_LEVEL := 10
-const XP_REQUIREMENT_STEP := 5
-const DAMAGE_BONUS_PER_LEVEL := 1
+const RunBalanceScript := preload("res://scripts/balance/run_balance.gd")
+const BASE_XP_TO_NEXT_LEVEL := RunBalanceScript.FIRST_LEVEL_XP_REQUIREMENT
+const XP_REQUIREMENT_STEP := RunBalanceScript.XP_REQUIREMENT_STEP
+const DAMAGE_BONUS_PER_LEVEL := RunBalanceScript.DAMAGE_BONUS_PER_LEVEL
 const EquipmentLoadoutScript := preload("res://scripts/equipment/equipment_loadout.gd")
 
 var run_currency: int = 0
